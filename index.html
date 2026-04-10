@@ -10,8 +10,13 @@
   .wrap { max-width: 480px; margin: 0 auto; padding-bottom: 3rem; }
   .header { background: #1a1a1a; border-radius: 12px; padding: 1.25rem 1.5rem; margin-bottom: 1rem; border: 1px solid #2a2a2a; }
   .brand { font-size: 11px; font-weight: 600; color: #39d353; letter-spacing: 0.1em; margin-bottom: 4px; }
-  .header h1 { font-size: 22px; font-weight: 600; color: #fff; margin: 0 0 4px; }
+  .header h1 { font-size: 22px; font-weight: 600; color: #fff; margin: 0 0 8px; }
   .header p { font-size: 13px; color: #888; margin: 0; }
+  .name-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+  .name-input { flex: 1; background: #2a2a2a; border: 1px solid #333; border-radius: 8px; color: #fff; font-size: 15px; font-weight: 600; padding: 7px 10px; font-family: inherit; }
+  .name-input:focus { outline: none; border-color: #39d353; }
+  .name-input::placeholder { color: #555; font-weight: 400; }
+  .name-label { font-size: 11px; color: #666; white-space: nowrap; }
   .progress-section { margin-bottom: 1rem; }
   .progress-label { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
   .progress-label span { font-size: 13px; color: #888; }
@@ -66,7 +71,7 @@
   .reset-btn-full { background: transparent; border: 1px solid #333; color: #888; border-radius: 10px; padding: 12px 16px; font-size: 13px; font-weight: 600; cursor: pointer; width: 100%; margin-top: 8px; font-family: inherit; }
   .reset-btn-full:hover { background: #2a2a2a; }
   #confetti-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 9999; }
-  .add-to-home { background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 10px; padding: 10px 14px; margin-bottom: 1rem; display: flex; align-items: center; gap: 10px; }
+  .add-to-home { background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 10px; padding: 10px 14px; margin-bottom: 1rem; }
   .add-to-home p { font-size: 12px; color: #888; line-height: 1.5; margin: 0; }
   .add-to-home strong { color: #39d353; }
 </style>
@@ -78,6 +83,9 @@
   <div class="header">
     <div class="brand">CTO FIT — FIT 40 METHOD</div>
     <h1>14-Day Kickstart Tracker</h1>
+    <div class="name-row">
+      <input class="name-input" id="name-input" type="text" placeholder="Enter your name" maxlength="40" oninput="saveName(this.value)" />
+    </div>
     <p>Tap to complete. Add notes after each session.</p>
   </div>
 
@@ -87,7 +95,7 @@
 
   <div class="progress-section">
     <div class="progress-label">
-      <span>Progress</span>
+      <span id="progress-greeting">Progress</span>
       <strong id="progress-text">0 / 10 sessions</strong>
     </div>
     <div class="progress-bar-bg">
@@ -111,8 +119,8 @@
 
   <div class="celebrate" id="celebrate">
     <div class="celebrate-icon">🏆</div>
-    <h2>14 days. Done.</h2>
-    <p>You showed up every day and finished what you started.<br>That's not nothing — that's everything.</p>
+    <h2 id="celebrate-title">14 days. Done.</h2>
+    <p id="celebrate-msg">You showed up every day and finished what you started.<br>That's not nothing — that's everything.</p>
     <div class="celebrate-quote">"14 days ago you made a decision. Today you finished it. Now let's keep going." — Coach Tony O</div>
     <div class="reflect-section">
       <label class="reflect-label">What changed in 14 days?</label>
@@ -148,9 +156,18 @@ const DAYS = [
 
 const CONFETTI_COLORS = ['#39d353','#7b2fbe','#ffffff','#f5c518','#39a0d3','#d353a0'];
 let completed = [], notes = {}, openNotes = {}, particles = [], animFrame = null, confettiActive = false;
+let userName = '';
 
 try { completed = JSON.parse(localStorage.getItem('fit40_done') || '[]'); } catch(e) {}
 try { notes = JSON.parse(localStorage.getItem('fit40_notes') || '{}'); } catch(e) {}
+try { userName = localStorage.getItem('fit40_name') || ''; } catch(e) {}
+
+function saveName(val) {
+  userName = val.trim();
+  try { localStorage.setItem('fit40_name', userName); } catch(e) {}
+  updateProgress();
+  updateCelebration();
+}
 
 function save() {
   try {
@@ -185,12 +202,32 @@ function isAllDone() {
   return completed.length === DAYS.filter(d => !d.rest).length;
 }
 
+function updateCelebration() {
+  const title = document.getElementById('celebrate-title');
+  const msg = document.getElementById('celebrate-msg');
+  if (userName) {
+    title.textContent = userName + '. 14 days. Done.';
+    msg.innerHTML = 'You showed up every day and finished what you started.<br>That\'s not nothing — that\'s everything.';
+  } else {
+    title.textContent = '14 days. Done.';
+    msg.innerHTML = 'You showed up every day and finished what you started.<br>That\'s not nothing — that\'s everything.';
+  }
+}
+
 function updateProgress() {
   const nonRest = DAYS.filter(d => !d.rest).length;
   const done = completed.length;
+  const greeting = document.getElementById('progress-greeting');
+  greeting.textContent = userName ? 'Progress — ' + userName : 'Progress';
   document.getElementById('progress-text').textContent = done + ' / ' + nonRest + ' sessions';
   document.getElementById('progress-fill').style.width = Math.round((done / nonRest) * 100) + '%';
-  document.getElementById('celebrate').style.display = done === nonRest ? 'block' : 'none';
+  const celebrate = document.getElementById('celebrate');
+  if (done === nonRest) {
+    celebrate.style.display = 'block';
+    updateCelebration();
+  } else {
+    celebrate.style.display = 'none';
+  }
 }
 
 function render() {
@@ -273,6 +310,7 @@ function resetTracker() {
   render();
 }
 
+if (userName) document.getElementById('name-input').value = userName;
 render();
 </script>
 </body>
