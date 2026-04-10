@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FIT 40 — 14-Day Kickstart Tracker</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #111; color: #fff; min-height: 100vh; padding: 1rem; }
+  .wrap { max-width: 480px; margin: 0 auto; padding-bottom: 3rem; }
+  .header { background: #1a1a1a; border-radius: 12px; padding: 1.25rem 1.5rem; margin-bottom: 1rem; border: 1px solid #2a2a2a; }
+  .brand { font-size: 11px; font-weight: 600; color: #39d353; letter-spacing: 0.1em; margin-bottom: 4px; }
+  .header h1 { font-size: 22px; font-weight: 600; color: #fff; margin: 0 0 4px; }
+  .header p { font-size: 13px; color: #888; margin: 0; }
+  .progress-section { margin-bottom: 1rem; }
+  .progress-label { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+  .progress-label span { font-size: 13px; color: #888; }
+  .progress-label strong { font-size: 15px; font-weight: 600; color: #fff; }
+  .progress-bar-bg { background: #2a2a2a; border-radius: 99px; height: 8px; overflow: hidden; }
+  .progress-bar-fill { height: 100%; background: #39d353; border-radius: 99px; transition: width 0.4s ease; }
+  .week-label { font-size: 11px; font-weight: 600; color: #39d353; letter-spacing: 0.08em; background: #1a1a1a; border-radius: 8px; padding: 6px 12px; margin: 1rem 0 0.5rem; display: inline-block; border: 1px solid #2a2a2a; }
+  .day-card { border-radius: 10px; border: 1px solid #2a2a2a; background: #1a1a1a; margin-bottom: 6px; overflow: hidden; transition: border-color 0.15s; }
+  .day-card.completed { border-color: #39d353; }
+  .day-card.rest { opacity: 0.5; }
+  .day-row { display: flex; align-items: center; gap: 12px; padding: 12px; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+  .day-card.rest .day-row { cursor: default; }
+  .day-num { width: 30px; height: 30px; border-radius: 50%; background: #2a2a2a; border: 1px solid #333; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600; color: #888; flex-shrink: 0; transition: all 0.2s; }
+  .day-card.completed .day-num { background: #39d353; border-color: #39d353; color: #111; }
+  .day-info { flex: 1; min-width: 0; }
+  .day-name { font-size: 14px; font-weight: 600; color: #fff; }
+  .day-sub { font-size: 11px; color: #888; margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .check-icon { width: 22px; height: 22px; flex-shrink: 0; }
+  .notes-toggle { display: flex; align-items: center; gap: 6px; background: none; border: none; padding: 0 12px 10px; cursor: pointer; color: #666; font-size: 11px; font-weight: 600; font-family: inherit; -webkit-tap-highlight-color: transparent; }
+  .notes-toggle:hover { color: #39d353; }
+  .day-card.rest .notes-toggle { display: none; }
+  .note-dot { width: 5px; height: 5px; border-radius: 50%; background: #39d353; display: none; }
+  .note-dot.visible { display: inline-block; }
+  .notes-area { display: none; border-top: 1px solid #2a2a2a; padding: 10px 12px; background: #141414; }
+  .notes-area.open { display: block; }
+  .notes-area textarea { width: 100%; background: #1e1e1e; border: 1px solid #333; border-radius: 8px; color: #ddd; font-size: 13px; padding: 8px 10px; resize: none; font-family: inherit; line-height: 1.5; }
+  .notes-area textarea:focus { outline: none; border-color: #39d353; }
+  .notes-area textarea::placeholder { color: #555; }
+  .btn-row { display: flex; gap: 8px; margin-top: 1.5rem; }
+  .btn { flex: 1; padding: 12px 16px; border-radius: 10px; font-size: 13px; font-weight: 600; cursor: pointer; font-family: inherit; transition: all 0.15s; -webkit-tap-highlight-color: transparent; }
+  .btn-danger { background: transparent; border: 1px solid #5a1a1a; color: #e05555; }
+  .btn-danger:hover { background: #2a1010; }
+  .confirm-reset { display: none; background: #1a1a1a; border: 1px solid #333; border-radius: 10px; padding: 1rem; margin-top: 0.75rem; text-align: center; }
+  .confirm-reset p { font-size: 13px; color: #888; margin: 0 0 0.75rem; }
+  .confirm-row { display: flex; gap: 8px; }
+  .btn-cancel { background: #2a2a2a; border: 1px solid #333; color: #aaa; }
+  .btn-cancel:hover { background: #333; }
+  .btn-confirm { background: transparent; border: 1px solid #5a1a1a; color: #e05555; }
+  .btn-confirm:hover { background: #2a1010; }
+  .celebrate { display: none; background: #1a1a1a; border-radius: 12px; padding: 1.5rem; text-align: center; margin-top: 1rem; border: 1px solid #39d353; }
+  .celebrate-icon { font-size: 40px; margin-bottom: 8px; }
+  .celebrate h2 { color: #39d353; font-size: 22px; font-weight: 700; margin: 0 0 8px; }
+  .celebrate p { color: #aaa; font-size: 14px; margin: 0 0 1rem; line-height: 1.6; }
+  .celebrate-quote { font-style: italic; color: #777; font-size: 13px; border-left: 3px solid #39d353; text-align: left; padding-left: 12px; margin: 1rem 0; line-height: 1.6; }
+  .reflect-section { text-align: left; margin: 1rem 0; }
+  .reflect-label { font-size: 12px; font-weight: 600; color: #39d353; display: block; margin-bottom: 4px; margin-top: 12px; }
+  .reflect-section textarea { width: 100%; background: #141414; border: 1px solid #333; border-radius: 8px; color: #ddd; font-size: 13px; padding: 8px 10px; resize: none; font-family: inherit; margin-bottom: 4px; }
+  .reflect-section textarea:focus { outline: none; border-color: #39d353; }
+  .reflect-section textarea::placeholder { color: #555; }
+  .upgrade-btn { background: #39d353; color: #111; border: none; border-radius: 10px; padding: 14px 16px; font-size: 14px; font-weight: 700; text-align: center; cursor: pointer; width: 100%; margin-top: 1rem; font-family: inherit; -webkit-tap-highlight-color: transparent; }
+  .upgrade-btn:hover { background: #2db845; }
+  .reset-btn-full { background: transparent; border: 1px solid #333; color: #888; border-radius: 10px; padding: 12px 16px; font-size: 13px; font-weight: 600; cursor: pointer; width: 100%; margin-top: 8px; font-family: inherit; }
+  .reset-btn-full:hover { background: #2a2a2a; }
+  #confetti-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 9999; }
+  .add-to-home { background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 10px; padding: 10px 14px; margin-bottom: 1rem; display: flex; align-items: center; gap: 10px; }
+  .add-to-home p { font-size: 12px; color: #888; line-height: 1.5; margin: 0; }
+  .add-to-home strong { color: #39d353; }
+</style>
+</head>
+<body>
+<canvas id="confetti-canvas"></canvas>
+<div class="wrap">
+
+  <div class="header">
+    <div class="brand">CTO FIT — FIT 40 METHOD</div>
+    <h1>14-Day Kickstart Tracker</h1>
+    <p>Tap to complete. Add notes after each session.</p>
+  </div>
+
+  <div class="add-to-home">
+    <p><strong>Save to your phone:</strong> Tap Share then "Add to Home Screen" to access this like an app anytime.</p>
+  </div>
+
+  <div class="progress-section">
+    <div class="progress-label">
+      <span>Progress</span>
+      <strong id="progress-text">0 / 10 sessions</strong>
+    </div>
+    <div class="progress-bar-bg">
+      <div class="progress-bar-fill" id="progress-fill" style="width:0%"></div>
+    </div>
+  </div>
+
+  <div id="tracker-days"></div>
+
+  <div class="btn-row">
+    <button class="btn btn-danger" onclick="showConfirm()">Reset tracker</button>
+  </div>
+
+  <div class="confirm-reset" id="confirm-reset">
+    <p>Reset all 14 days and clear all notes?</p>
+    <div class="confirm-row">
+      <button class="btn btn-cancel" style="flex:1" onclick="hideConfirm()">Cancel</button>
+      <button class="btn btn-confirm" style="flex:1" onclick="resetTracker()">Yes, reset</button>
+    </div>
+  </div>
+
+  <div class="celebrate" id="celebrate">
+    <div class="celebrate-icon">🏆</div>
+    <h2>14 days. Done.</h2>
+    <p>You showed up every day and finished what you started.<br>That's not nothing — that's everything.</p>
+    <div class="celebrate-quote">"14 days ago you made a decision. Today you finished it. Now let's keep going." — Coach Tony O</div>
+    <div class="reflect-section">
+      <label class="reflect-label">What changed in 14 days?</label>
+      <textarea rows="2" placeholder="Energy, strength, consistency, mindset..."></textarea>
+      <label class="reflect-label">What was harder than you expected?</label>
+      <textarea rows="2" placeholder="Be honest. This is where your next focus lives..."></textarea>
+      <label class="reflect-label">What do you want to build next?</label>
+      <textarea rows="2" placeholder="More strength? Better nutrition? Write it down..."></textarea>
+    </div>
+    <button class="upgrade-btn" onclick="window.open('https://ctofit.com', '_blank')">Join the FIT 40 Inner Circle — $11/month</button>
+    <button class="reset-btn-full" onclick="resetTracker()">Start another round</button>
+  </div>
+
+</div>
+
+<script>
+const DAYS = [
+  {week:1,day:1,name:"Monday",sub:"Walking — active recovery, 20–30 min",rest:false,ph:"How did the walk feel? Energy level?"},
+  {week:1,day:2,name:"Tuesday",sub:"OTM-X: Control & Core",rest:false,ph:"How did the workout go? Any movements to work on?"},
+  {week:1,day:3,name:"Wednesday",sub:"Walking — move your body, clear your head",rest:false,ph:"How are you feeling mid-week?"},
+  {week:1,day:4,name:"Thursday",sub:"OTM-X: Foundation Flow",rest:false,ph:"Reps completed? How did the finisher feel?"},
+  {week:1,day:5,name:"Friday",sub:"Walking — daily movement habit",rest:false,ph:"Week 1 almost done. What's working?"},
+  {week:1,day:6,name:"Saturday",sub:"Rest",rest:true,ph:""},
+  {week:1,day:7,name:"Sunday",sub:"Rest",rest:true,ph:""},
+  {week:2,day:8,name:"Monday",sub:"Walking — keep the habit going",rest:false,ph:"Starting Week 2. How are you feeling?"},
+  {week:2,day:9,name:"Tuesday",sub:"OTM-X: Power & Precision",rest:false,ph:"First kettlebell session. How did the swings feel?"},
+  {week:2,day:10,name:"Wednesday",sub:"Walking",rest:false,ph:"Any soreness from Tuesday? Notes?"},
+  {week:2,day:11,name:"Thursday",sub:"OTM-X: Power & Precision",rest:false,ph:"Stronger than Tuesday? What improved?"},
+  {week:2,day:12,name:"Friday",sub:"Walking — finish strong",rest:false,ph:"Last training day. How do you feel vs Day 1?"},
+  {week:2,day:13,name:"Saturday",sub:"Rest",rest:true,ph:""},
+  {week:2,day:14,name:"Sunday",sub:"Rest — you made it",rest:true,ph:""},
+];
+
+const CONFETTI_COLORS = ['#39d353','#7b2fbe','#ffffff','#f5c518','#39a0d3','#d353a0'];
+let completed = [], notes = {}, openNotes = {}, particles = [], animFrame = null, confettiActive = false;
+
+try { completed = JSON.parse(localStorage.getItem('fit40_done') || '[]'); } catch(e) {}
+try { notes = JSON.parse(localStorage.getItem('fit40_notes') || '{}'); } catch(e) {}
+
+function save() {
+  try {
+    localStorage.setItem('fit40_done', JSON.stringify(completed));
+    localStorage.setItem('fit40_notes', JSON.stringify(notes));
+  } catch(e) {}
+}
+
+function toggleDay(i) {
+  if (DAYS[i].rest) return;
+  const wasComplete = isAllDone();
+  const idx = completed.indexOf(i);
+  if (idx === -1) { completed.push(i); openNotes[i] = true; }
+  else completed.splice(idx, 1);
+  save(); render();
+  if (!wasComplete && isAllDone()) setTimeout(launchConfetti, 200);
+}
+
+function toggleNotes(i, e) {
+  e.stopPropagation();
+  openNotes[i] = !openNotes[i];
+  render();
+}
+
+function saveNote(i, val) {
+  notes[i] = val; save();
+  const dot = document.getElementById('dot-' + i);
+  if (dot) dot.className = 'note-dot' + (val.trim() ? ' visible' : '');
+}
+
+function isAllDone() {
+  return completed.length === DAYS.filter(d => !d.rest).length;
+}
+
+function updateProgress() {
+  const nonRest = DAYS.filter(d => !d.rest).length;
+  const done = completed.length;
+  document.getElementById('progress-text').textContent = done + ' / ' + nonRest + ' sessions';
+  document.getElementById('progress-fill').style.width = Math.round((done / nonRest) * 100) + '%';
+  document.getElementById('celebrate').style.display = done === nonRest ? 'block' : 'none';
+}
+
+function render() {
+  const container = document.getElementById('tracker-days');
+  let html = '', lastWeek = 0;
+  DAYS.forEach((d, i) => {
+    if (d.week !== lastWeek) {
+      html += '<div class="week-label">Week ' + d.week + (d.week === 1 ? ' — Bodyweight Foundation' : ' — Kettlebell Power & Control') + '</div>';
+      lastWeek = d.week;
+    }
+    const done = completed.includes(i);
+    const hasNote = notes[i] && notes[i].trim();
+    const isOpen = openNotes[i];
+    const checkSvg = done
+      ? '<svg class="check-icon" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="11" r="10" fill="#39d353"/><path d="M7 11l3 3 5-5" stroke="#111" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>'
+      : '<svg class="check-icon" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="11" r="10" stroke="#333" stroke-width="1.5"/></svg>';
+    html += '<div class="day-card' + (done ? ' completed' : '') + (d.rest ? ' rest' : '') + '">';
+    html += '<div class="day-row" onclick="toggleDay(' + i + ')">';
+    html += '<div class="day-num">' + d.day + '</div>';
+    html += '<div class="day-info"><div class="day-name">' + d.name + '</div><div class="day-sub">' + d.sub + '</div></div>';
+    html += checkSvg + '</div>';
+    if (!d.rest) {
+      html += '<button class="notes-toggle" onclick="toggleNotes(' + i + ', event)">';
+      html += '<span id="dot-' + i + '" class="note-dot' + (hasNote ? ' visible' : '') + '"></span>';
+      html += (isOpen ? 'hide notes' : 'add notes') + '</button>';
+      html += '<div class="notes-area' + (isOpen ? ' open' : '') + '">';
+      html += '<textarea rows="2" placeholder="' + d.ph + '" oninput="saveNote(' + i + ', this.value)">' + (notes[i] || '') + '</textarea>';
+      html += '</div>';
+    }
+    html += '</div>';
+  });
+  container.innerHTML = html;
+  updateProgress();
+}
+
+function launchConfetti() {
+  const canvas = document.getElementById('confetti-canvas');
+  const ctx = canvas.getContext('2d');
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  particles = [];
+  for (let i = 0; i < 180; i++) {
+    particles.push({
+      x: Math.random() * canvas.width, y: -10 - Math.random() * 200,
+      w: 8 + Math.random() * 8, h: 4 + Math.random() * 4,
+      color: CONFETTI_COLORS[Math.floor(Math.random() * CONFETTI_COLORS.length)],
+      vx: (Math.random() - 0.5) * 4, vy: 2 + Math.random() * 4,
+      angle: Math.random() * Math.PI * 2, spin: (Math.random() - 0.5) * 0.2, opacity: 1
+    });
+  }
+  confettiActive = true;
+  if (animFrame) cancelAnimationFrame(animFrame);
+  animateConfetti();
+  setTimeout(stopConfetti, 4000);
+}
+
+function animateConfetti() {
+  const canvas = document.getElementById('confetti-canvas');
+  const ctx = canvas.getContext('2d');
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  particles.forEach(p => {
+    p.x += p.vx; p.y += p.vy; p.angle += p.spin; p.vy += 0.07;
+    if (p.y > canvas.height * 0.75) p.opacity = Math.max(0, p.opacity - 0.02);
+    ctx.save(); ctx.globalAlpha = p.opacity; ctx.translate(p.x, p.y); ctx.rotate(p.angle);
+    ctx.fillStyle = p.color; ctx.fillRect(-p.w/2, -p.h/2, p.w, p.h); ctx.restore();
+  });
+  particles = particles.filter(p => p.opacity > 0);
+  if (particles.length > 0 && confettiActive) animFrame = requestAnimationFrame(animateConfetti);
+  else ctx.clearRect(0, 0, canvas.width, canvas.height);
+}
+
+function stopConfetti() { confettiActive = false; }
+function showConfirm() { document.getElementById('confirm-reset').style.display = 'block'; }
+function hideConfirm() { document.getElementById('confirm-reset').style.display = 'none'; }
+function resetTracker() {
+  completed = []; notes = {}; openNotes = {}; save(); hideConfirm(); stopConfetti();
+  const canvas = document.getElementById('confetti-canvas');
+  canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
+  document.getElementById('celebrate').style.display = 'none';
+  render();
+}
+
+render();
+</script>
+</body>
+</html>
