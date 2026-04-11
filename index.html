@@ -59,6 +59,16 @@
   .notes-area textarea { width: 100%; background: #1e1e1e; border: 1px solid #333; border-radius: 8px; color: #ddd; font-size: 16px; padding: 8px 10px; resize: none; font-family: inherit; line-height: 1.5; }
   .notes-area textarea:focus { outline: none; border-color: #39d353; }
   .notes-area textarea::placeholder { color: #555; }
+  .workout-toggle { display: flex; align-items: center; gap: 6px; background: none; border: none; padding: 0 12px 10px; cursor: pointer; color: #39d353; font-size: 11px; font-weight: 600; font-family: inherit; -webkit-tap-highlight-color: transparent; }
+  .workout-toggle:hover { color: #2db845; }
+  .workout-area { display: none; border-top: 1px solid #2a2a2a; padding: 12px; background: #0d0d0d; }
+  .workout-area.open { display: block; }
+  .workout-youtube { display: block; background: #39d353; color: #111; text-decoration: none; border-radius: 8px; padding: 10px 14px; font-size: 13px; font-weight: 700; text-align: center; margin-bottom: 12px; -webkit-tap-highlight-color: transparent; }
+  .workout-youtube:hover { background: #2db845; }
+  .workout-section-label { font-size: 10px; font-weight: 700; color: #39d353; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 6px; }
+  .workout-circuit-label { font-size: 11px; font-weight: 700; color: #fff; margin: 10px 0 6px; }
+  .workout-move { font-size: 12px; color: #ccc; padding: 4px 0; border-bottom: 1px solid #1e1e1e; }
+  .workout-finisher { font-size: 12px; color: #f5c518; margin-top: 10px; padding: 8px 10px; background: #1a1a00; border-radius: 6px; border-left: 3px solid #f5c518; }
 
   /* Milestone toast */
   .milestone-toast { position: fixed; top: 20px; left: 50%; transform: translateX(-50%) translateY(-160px); background: #1a1a1a; border: 1px solid #39d353; border-radius: 12px; padding: 12px 20px; text-align: center; z-index: 10000; transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); min-width: 260px; pointer-events: none; }
@@ -224,16 +234,44 @@
 <script>
 const DAYS = [
   {week:1,day:1,name:"Monday",sub:"Walking — active recovery, 20–30 min",rest:false,ph:"How did the walk feel? Energy level?"},
-  {week:1,day:2,name:"Tuesday",sub:"OTM-X: Control & Core",rest:false,ph:"How did the workout go? Any movements to work on?"},
+  {week:1,day:2,name:"Tuesday",sub:"OTM-X: Control & Core",rest:false,ph:"How did the workout go? Any movements to work on?",
+    youtube:"https://youtu.be/BjCJ66Ov9iE?si=jME7Gr48sWdJkWg4",
+    workout:{
+      warmup:["Pushups x 5","Air Squats x 10","Inchworm x 3"],
+      circuit:{label:"Main Circuit — 12 Min / 4 Rounds",moves:["Min 1) Pushups x 8","Min 2) Air Squats x 15","Min 3) Mountain Climbers x 10"]},
+      finisher:"CTO Plank — 2 sets x 30 sec, rest between sets"
+    }
+  },
   {week:1,day:3,name:"Wednesday",sub:"Walking — move your body, clear your head",rest:false,ph:"How are you feeling mid-week?"},
-  {week:1,day:4,name:"Thursday",sub:"OTM-X: Foundation Flow",rest:false,ph:"Reps completed? How did the finisher feel?"},
+  {week:1,day:4,name:"Thursday",sub:"OTM-X: Foundation Flow",rest:false,ph:"Reps completed? How did the finisher feel?",
+    youtube:"https://youtu.be/BjCJ66Ov9iE?si=jME7Gr48sWdJkWg4",
+    workout:{
+      warmup:["Pushups x 5","Air Squats x 10","Inchworm x 3"],
+      circuit:{label:"Main Circuit — 16 Min / 4 Rounds",moves:["Min 1) Pushups x 8","Min 2) Air Squats x 15","Min 3) Jumping Air Squats x 10","Min 4) Mountain Climbers x 10"]},
+      finisher:"CTO Plank — 2 sets x 30 sec, rest between sets"
+    }
+  },
   {week:1,day:5,name:"Friday",sub:"Walking — daily movement habit",rest:false,ph:"Week 1 almost done. What's working?"},
   {week:1,day:6,name:"Saturday",sub:"Rest / Optional Walk",rest:true,ph:"Did you get out for a walk? How are you feeling after Week 1?",bonus:"Extra credit. Most people sat on the couch today. You didn't."},
   {week:1,day:7,name:"Sunday",sub:"Rest / Optional Walk",rest:true,ph:"Rest day notes — recovery, energy, mindset?",bonus:"Active recovery on a Sunday? That's the difference between good and great."},
   {week:2,day:8,name:"Monday",sub:"Walking — keep the habit going",rest:false,ph:"Starting Week 2. How are you feeling?"},
-  {week:2,day:9,name:"Tuesday",sub:"OTM-X: Power & Precision",rest:false,ph:"First kettlebell session. How did the swings feel?"},
+  {week:2,day:9,name:"Tuesday",sub:"OTM-X: Power & Precision",rest:false,ph:"First kettlebell session. How did the swings feel?",
+    youtube:"https://youtu.be/sn5Tb4nYLrQ?si=hXWn6NZprpW9hz4u",
+    workout:{
+      warmup:["Pushups x 5","Jumping Air Squats x 10","Inchworm with Pushup x 3"],
+      circuit:{label:"Main Circuit — 12 Min / 4 Rounds",moves:["Min 1) Kettlebell Swing x 8–10","Min 2) Pushups x 8–10","Min 3) KB Goblet Squat x 8–10"]},
+      finisher:"CTO Plank — 2 sets x 30 sec, rest between sets"
+    }
+  },
   {week:2,day:10,name:"Wednesday",sub:"Walking",rest:false,ph:"Any soreness from Tuesday? Notes?"},
-  {week:2,day:11,name:"Thursday",sub:"OTM-X: Power & Precision",rest:false,ph:"Stronger than Tuesday? What improved?"},
+  {week:2,day:11,name:"Thursday",sub:"OTM-X: Power & Precision",rest:false,ph:"Stronger than Tuesday? What improved?",
+    youtube:"https://youtu.be/sn5Tb4nYLrQ?si=hXWn6NZprpW9hz4u",
+    workout:{
+      warmup:["Pushups x 5","Jumping Air Squats x 10","Inchworm with Pushup x 3"],
+      circuit:{label:"Main Circuit — 12 Min / 4 Rounds",moves:["Min 1) Kettlebell Swing x 8–10","Min 2) Pushups x 8–10","Min 3) KB Goblet Squat x 8–10"]},
+      finisher:"CTO Plank — 2 sets x 30 sec, rest between sets"
+    }
+  },
   {week:2,day:12,name:"Friday",sub:"Walking — finish strong",rest:false,ph:"Last training day. How do you feel vs Day 1?"},
   {week:2,day:13,name:"Saturday",sub:"Rest / Optional Walk",rest:true,ph:"Did you walk today? How is your body feeling?",bonus:"Week 2 and still putting in extra work. This is who you're becoming."},
   {week:2,day:14,name:"Sunday",sub:"Rest / Optional Walk — you made it",rest:true,ph:"Final day. How do you feel compared to Day 1?",bonus:"Last day and you're still moving. That's not a 14-day habit. That's a life habit."},
@@ -247,7 +285,7 @@ const MILESTONES = {
 };
 
 const CONFETTI_COLORS = ['#39d353','#7b2fbe','#ffffff','#f5c518','#39a0d3','#d353a0'];
-let completed = [], notes = {}, openNotes = {}, particles = [], animFrame = null, confettiActive = false;
+let completed = [], notes = {}, openNotes = {}, openWorkout = {}, particles = [], animFrame = null, confettiActive = false;
 let userName = '', toastTimer = null, shownMilestones = [];
 
 try { completed = JSON.parse(localStorage.getItem('fit40_done') || '[]'); } catch(e) {}
@@ -320,6 +358,12 @@ function showMilestone(m) {
   toast.classList.add('show');
   if (toastTimer) clearTimeout(toastTimer);
   toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 3500);
+}
+
+function toggleWorkout(i, e) {
+  e.stopPropagation();
+  openWorkout[i] = !openWorkout[i];
+  render();
 }
 
 function toggleNotes(i, e) {
@@ -398,6 +442,20 @@ function render() {
     html += '<div class="day-num">' + d.day + '</div>';
     html += '<div class="day-info"><div class="day-name">' + d.name + '</div><div class="day-sub">' + d.sub + '</div></div>';
     html += checkSvg + '</div>';
+    if (d.workout) {
+      const wo = d.workout;
+      const wOpen = openWorkout[i];
+      html += '<button class="workout-toggle" onclick="toggleWorkout(' + i + ', event)">';
+      html += (wOpen ? '▲ hide workout' : '▶ view workout + follow along') + '</button>';
+      html += '<div class="workout-area' + (wOpen ? ' open' : '') + '">';
+      html += '<a class="workout-youtube" href="' + d.youtube + '" target="_blank">▶  Train With Coach Tony — Watch Now</a>';
+      html += '<div class="workout-section-label">Warm-Up — 2 Rounds</div>';
+      wo.warmup.forEach(function(m) { html += '<div class="workout-move">• ' + m + '</div>'; });
+      html += '<div class="workout-circuit-label">' + wo.circuit.label + '</div>';
+      wo.circuit.moves.forEach(function(m) { html += '<div class="workout-move">' + m + '</div>'; });
+      html += '<div class="workout-finisher">⚡ Finisher: ' + wo.finisher + '</div>';
+      html += '</div>';
+    }
     if (!d.rest || (d.rest && d.ph)) {
       html += '<button class="notes-toggle" onclick="toggleNotes(' + i + ', event)">';
       html += '<span id="dot-' + i + '" class="note-dot' + (hasNote ? ' visible' : '') + '"></span>';
@@ -452,7 +510,7 @@ function stopConfetti() { confettiActive = false; }
 function showConfirm() { document.getElementById('confirm-reset').style.display = 'block'; }
 function hideConfirm() { document.getElementById('confirm-reset').style.display = 'none'; }
 function resetTracker() {
-  completed = []; notes = {}; openNotes = {}; shownMilestones = [];
+  completed = []; notes = {}; openNotes = {}; openWorkout = {}; shownMilestones = [];
   save(); hideConfirm(); stopConfetti();
   const canvas = document.getElementById('confetti-canvas');
   canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
