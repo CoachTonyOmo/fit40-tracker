@@ -16,13 +16,27 @@
   .name-input { flex: 1; background: #2a2a2a; border: 1px solid #333; border-radius: 8px; color: #fff; font-size: 15px; font-weight: 600; padding: 7px 10px; font-family: inherit; }
   .name-input:focus { outline: none; border-color: #39d353; }
   .name-input::placeholder { color: #555; font-weight: 400; }
-  .name-label { font-size: 11px; color: #666; white-space: nowrap; }
-  .progress-section { margin-bottom: 1rem; }
-  .progress-label { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
-  .progress-label span { font-size: 13px; color: #888; }
-  .progress-label strong { font-size: 15px; font-weight: 600; color: #fff; }
-  .progress-bar-bg { background: #2a2a2a; border-radius: 99px; height: 8px; overflow: hidden; }
-  .progress-bar-fill { height: 100%; background: #39d353; border-radius: 99px; transition: width 0.4s ease; }
+
+  /* Stats row */
+  .stats-row { display: flex; gap: 8px; margin-bottom: 1rem; }
+  .stat-card { flex: 1; background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 10px; padding: 10px 12px; text-align: center; }
+  .stat-value { font-size: 22px; font-weight: 700; color: #39d353; line-height: 1; margin-bottom: 4px; }
+  .stat-label { font-size: 10px; color: #666; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; }
+  .streak-card { border-color: #2a1a00; }
+  .streak-card .stat-value { color: #f5a623; }
+  .streak-fire { font-size: 16px; }
+
+  /* Progress ring */
+  .ring-section { display: flex; align-items: center; gap: 16px; background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 12px; padding: 14px 16px; margin-bottom: 1rem; }
+  .ring-wrap { position: relative; width: 64px; height: 64px; flex-shrink: 0; }
+  .ring-wrap svg { transform: rotate(-90deg); }
+  .ring-bg { fill: none; stroke: #2a2a2a; stroke-width: 6; }
+  .ring-fill { fill: none; stroke: #39d353; stroke-width: 6; stroke-linecap: round; transition: stroke-dashoffset 0.6s ease; }
+  .ring-pct { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 13px; font-weight: 700; color: #39d353; }
+  .ring-info { flex: 1; }
+  .ring-info .ring-title { font-size: 14px; font-weight: 600; color: #fff; margin-bottom: 2px; }
+  .ring-info .ring-sub { font-size: 12px; color: #888; }
+
   .week-label { font-size: 11px; font-weight: 600; color: #39d353; letter-spacing: 0.08em; background: #1a1a1a; border-radius: 8px; padding: 6px 12px; margin: 1rem 0 0.5rem; display: inline-block; border: 1px solid #2a2a2a; }
   .day-card { border-radius: 10px; border: 1px solid #2a2a2a; background: #1a1a1a; margin-bottom: 6px; overflow: hidden; transition: border-color 0.15s; }
   .day-card.completed { border-color: #39d353; }
@@ -45,6 +59,14 @@
   .notes-area textarea { width: 100%; background: #1e1e1e; border: 1px solid #333; border-radius: 8px; color: #ddd; font-size: 16px; padding: 8px 10px; resize: none; font-family: inherit; line-height: 1.5; }
   .notes-area textarea:focus { outline: none; border-color: #39d353; }
   .notes-area textarea::placeholder { color: #555; }
+
+  /* Milestone toast */
+  .milestone-toast { position: fixed; top: 20px; left: 50%; transform: translateX(-50%) translateY(-80px); background: #1a1a1a; border: 1px solid #39d353; border-radius: 12px; padding: 12px 20px; text-align: center; z-index: 10000; transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); min-width: 260px; }
+  .milestone-toast.show { transform: translateX(-50%) translateY(0); }
+  .milestone-toast .m-icon { font-size: 24px; margin-bottom: 4px; }
+  .milestone-toast .m-title { font-size: 15px; font-weight: 700; color: #39d353; }
+  .milestone-toast .m-sub { font-size: 12px; color: #888; margin-top: 2px; }
+
   .btn-row { display: flex; gap: 8px; margin-top: 1.5rem; }
   .btn { flex: 1; padding: 12px 16px; border-radius: 10px; font-size: 13px; font-weight: 600; cursor: pointer; font-family: inherit; transition: all 0.15s; -webkit-tap-highlight-color: transparent; }
   .btn-danger { background: transparent; border: 1px solid #5a1a1a; color: #e05555; }
@@ -56,6 +78,8 @@
   .btn-cancel:hover { background: #333; }
   .btn-confirm { background: transparent; border: 1px solid #5a1a1a; color: #e05555; }
   .btn-confirm:hover { background: #2a1010; }
+
+  /* Celebrate */
   .celebrate { display: none; background: #1a1a1a; border-radius: 12px; padding: 1.5rem; text-align: center; margin-top: 1rem; border: 1px solid #39d353; }
   .celebrate-icon { font-size: 40px; margin-bottom: 8px; }
   .celebrate h2 { color: #39d353; font-size: 22px; font-weight: 700; margin: 0 0 8px; }
@@ -66,6 +90,23 @@
   .reflect-section textarea { width: 100%; background: #141414; border: 1px solid #333; border-radius: 8px; color: #ddd; font-size: 16px; padding: 8px 10px; resize: none; font-family: inherit; margin-bottom: 4px; }
   .reflect-section textarea:focus { outline: none; border-color: #39d353; }
   .reflect-section textarea::placeholder { color: #555; }
+
+  /* Certificate */
+  .certificate { background: #0d0d0d; border: 2px solid #39d353; border-radius: 16px; padding: 1.5rem; margin: 1.25rem 0; text-align: center; position: relative; overflow: hidden; }
+  .certificate::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, #39d353, #7b2fbe, #39d353); }
+  .cert-label { font-size: 10px; font-weight: 600; color: #39d353; letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 8px; }
+  .cert-title { font-size: 13px; color: #888; margin-bottom: 6px; }
+  .cert-name { font-size: 26px; font-weight: 700; color: #fff; margin-bottom: 6px; letter-spacing: -0.02em; }
+  .cert-program { font-size: 13px; color: #39d353; font-weight: 600; margin-bottom: 12px; }
+  .cert-divider { height: 1px; background: #2a2a2a; margin: 12px 0; }
+  .cert-bottom { display: flex; justify-content: space-between; align-items: flex-end; }
+  .cert-sig { text-align: left; }
+  .cert-sig-name { font-size: 13px; font-weight: 700; color: #fff; }
+  .cert-sig-title { font-size: 11px; color: #666; }
+  .cert-date { text-align: right; font-size: 11px; color: #666; }
+  .cert-badge { width: 44px; height: 44px; border-radius: 50%; background: #39d353; display: flex; align-items: center; justify-content: center; font-size: 20px; margin: 0 auto 8px; }
+  .screenshot-hint { font-size: 11px; color: #555; margin-top: 8px; }
+
   .upgrade-btn { background: #39d353; color: #111; border: none; border-radius: 10px; padding: 14px 16px; font-size: 14px; font-weight: 700; text-align: center; cursor: pointer; width: 100%; margin-top: 1rem; font-family: inherit; -webkit-tap-highlight-color: transparent; }
   .upgrade-btn:hover { background: #2db845; }
   .reset-btn-full { background: transparent; border: 1px solid #333; color: #888; border-radius: 10px; padding: 12px 16px; font-size: 13px; font-weight: 600; cursor: pointer; width: 100%; margin-top: 8px; font-family: inherit; }
@@ -78,8 +119,13 @@
 </head>
 <body>
 <canvas id="confetti-canvas"></canvas>
-<div class="wrap">
+<div class="milestone-toast" id="milestone-toast">
+  <div class="m-icon" id="m-icon"></div>
+  <div class="m-title" id="m-title"></div>
+  <div class="m-sub" id="m-sub"></div>
+</div>
 
+<div class="wrap">
   <div class="header">
     <div class="brand">CTO FIT — FIT 40 METHOD</div>
     <h1>14-Day Kickstart Tracker</h1>
@@ -93,13 +139,34 @@
     <p><strong>Save to your phone:</strong> Tap Share then "Add to Home Screen" to access this like an app anytime.</p>
   </div>
 
-  <div class="progress-section">
-    <div class="progress-label">
-      <span id="progress-greeting">Progress</span>
-      <strong id="progress-text">0 / 10 sessions</strong>
+  <!-- Stats -->
+  <div class="stats-row">
+    <div class="stat-card">
+      <div class="stat-value" id="stat-done">0</div>
+      <div class="stat-label">Sessions Done</div>
     </div>
-    <div class="progress-bar-bg">
-      <div class="progress-bar-fill" id="progress-fill" style="width:0%"></div>
+    <div class="stat-card streak-card">
+      <div class="stat-value" id="stat-streak"><span class="streak-fire">🔥</span> 0</div>
+      <div class="stat-label">Day Streak</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value" id="stat-pct">0%</div>
+      <div class="stat-label">Complete</div>
+    </div>
+  </div>
+
+  <!-- Ring -->
+  <div class="ring-section">
+    <div class="ring-wrap">
+      <svg width="64" height="64" viewBox="0 0 64 64">
+        <circle class="ring-bg" cx="32" cy="32" r="27"/>
+        <circle class="ring-fill" id="ring-fill" cx="32" cy="32" r="27" stroke-dasharray="169.6" stroke-dashoffset="169.6"/>
+      </svg>
+      <div class="ring-pct" id="ring-pct">0%</div>
+    </div>
+    <div class="ring-info">
+      <div class="ring-title" id="ring-title">Ready to start</div>
+      <div class="ring-sub" id="ring-sub">Complete your first session to begin</div>
     </div>
   </div>
 
@@ -120,8 +187,27 @@
   <div class="celebrate" id="celebrate">
     <div class="celebrate-icon">🏆</div>
     <h2 id="celebrate-title">14 days. Done.</h2>
-    <p id="celebrate-msg">You showed up every day and finished what you started.<br>That's not nothing — that's everything.</p>
+    <p>You showed up every day and finished what you started.<br>That's not nothing — that's everything.</p>
     <div class="celebrate-quote">"14 days ago you made a decision. Today you finished it. Now let's keep going." — Coach Tony O</div>
+
+    <!-- Certificate -->
+    <div class="certificate" id="certificate">
+      <div class="cert-badge">🏆</div>
+      <div class="cert-label">Certificate of Completion</div>
+      <div class="cert-title">This certifies that</div>
+      <div class="cert-name" id="cert-name">You</div>
+      <div class="cert-program">Successfully completed the FIT 40<br>14-Day Kickstart Program</div>
+      <div class="cert-divider"></div>
+      <div class="cert-bottom">
+        <div class="cert-sig">
+          <div class="cert-sig-name">Coach Tony O</div>
+          <div class="cert-sig-title">CTO FIT — FIT 40 Method™</div>
+        </div>
+        <div class="cert-date" id="cert-date"></div>
+      </div>
+    </div>
+    <div class="screenshot-hint">📸 Screenshot your certificate and share your win</div>
+
     <div class="reflect-section">
       <label class="reflect-label">What changed in 14 days?</label>
       <textarea rows="2" placeholder="Energy, strength, consistency, mindset..."></textarea>
@@ -133,7 +219,6 @@
     <button class="upgrade-btn" onclick="window.open('https://ctofit.com', '_blank')">Join the FIT 40 Inner Circle — $11/month</button>
     <button class="reset-btn-full" onclick="resetTracker()">Start another round</button>
   </div>
-
 </div>
 
 <script>
@@ -154,36 +239,73 @@ const DAYS = [
   {week:2,day:14,name:"Sunday",sub:"Rest — you made it",rest:true,ph:""},
 ];
 
+const MILESTONES = {
+  1:  { icon: '💪', title: 'First session done!', sub: 'The hardest one is behind you. Keep going.' },
+  5:  { icon: '⚡', title: 'Week 1 — halfway there!', sub: 'Five sessions down. You\'re building something real.' },
+  7:  { icon: '🎯', title: 'Week 1 complete!', sub: 'Seven days in. You\'re already different.' },
+  10: { icon: '🔥', title: 'Double digits!', sub: 'Ten sessions. Most people quit before this.' },
+};
+
 const CONFETTI_COLORS = ['#39d353','#7b2fbe','#ffffff','#f5c518','#39a0d3','#d353a0'];
 let completed = [], notes = {}, openNotes = {}, particles = [], animFrame = null, confettiActive = false;
-let userName = '';
+let userName = '', toastTimer = null, shownMilestones = [];
 
 try { completed = JSON.parse(localStorage.getItem('fit40_done') || '[]'); } catch(e) {}
 try { notes = JSON.parse(localStorage.getItem('fit40_notes') || '{}'); } catch(e) {}
 try { userName = localStorage.getItem('fit40_name') || ''; } catch(e) {}
+try { shownMilestones = JSON.parse(localStorage.getItem('fit40_milestones') || '[]'); } catch(e) {}
 
 function saveName(val) {
   userName = val.trim();
   try { localStorage.setItem('fit40_name', userName); } catch(e) {}
-  updateProgress();
-  updateCelebration();
+  updateStats();
 }
 
 function save() {
   try {
     localStorage.setItem('fit40_done', JSON.stringify(completed));
     localStorage.setItem('fit40_notes', JSON.stringify(notes));
+    localStorage.setItem('fit40_milestones', JSON.stringify(shownMilestones));
   } catch(e) {}
+}
+
+function getStreak() {
+  const nonRestIndices = DAYS.map((d, i) => d.rest ? null : i).filter(i => i !== null);
+  let streak = 0;
+  for (let i = nonRestIndices.length - 1; i >= 0; i--) {
+    if (completed.includes(nonRestIndices[i])) streak++;
+    else break;
+  }
+  return streak;
 }
 
 function toggleDay(i) {
   if (DAYS[i].rest) return;
   const wasComplete = isAllDone();
+  const prevCount = completed.length;
   const idx = completed.indexOf(i);
   if (idx === -1) { completed.push(i); openNotes[i] = true; }
   else completed.splice(idx, 1);
   save(); render();
-  if (!wasComplete && isAllDone()) setTimeout(launchConfetti, 200);
+  const newCount = completed.length;
+  if (newCount > prevCount) {
+    if (MILESTONES[newCount] && !shownMilestones.includes(newCount)) {
+      shownMilestones.push(newCount);
+      save();
+      setTimeout(() => showMilestone(MILESTONES[newCount]), 300);
+    }
+  }
+  if (!wasComplete && isAllDone()) setTimeout(launchConfetti, 400);
+}
+
+function showMilestone(m) {
+  const toast = document.getElementById('milestone-toast');
+  document.getElementById('m-icon').textContent = m.icon;
+  document.getElementById('m-title').textContent = m.title;
+  document.getElementById('m-sub').textContent = m.sub;
+  toast.classList.add('show');
+  if (toastTimer) clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => toast.classList.remove('show'), 3500);
 }
 
 function toggleNotes(i, e) {
@@ -202,29 +324,42 @@ function isAllDone() {
   return completed.length === DAYS.filter(d => !d.rest).length;
 }
 
-function updateCelebration() {
-  const title = document.getElementById('celebrate-title');
-  const msg = document.getElementById('celebrate-msg');
-  if (userName) {
-    title.textContent = userName + '. 14 days. Done.';
-    msg.innerHTML = 'You showed up every day and finished what you started.<br>That\'s not nothing — that\'s everything.';
-  } else {
-    title.textContent = '14 days. Done.';
-    msg.innerHTML = 'You showed up every day and finished what you started.<br>That\'s not nothing — that\'s everything.';
-  }
+function getRingMessages(pct) {
+  if (pct === 0) return ['Ready to start', 'Complete your first session to begin'];
+  if (pct < 20) return ['Getting started', 'Momentum is building — keep going'];
+  if (pct < 40) return ['Building the habit', 'Every session counts. Stay consistent.'];
+  if (pct < 60) return ['Halfway there', 'You\'re proving this is possible. Don\'t stop.'];
+  if (pct < 80) return ['Almost there', 'The finish line is in sight. Push through.'];
+  if (pct < 100) return ['Final stretch', 'One last push. Finish what you started.'];
+  return ['Mission complete', 'You did it. 14 days. Done.'];
 }
 
-function updateProgress() {
+function updateStats() {
   const nonRest = DAYS.filter(d => !d.rest).length;
   const done = completed.length;
-  const greeting = document.getElementById('progress-greeting');
-  greeting.textContent = userName ? 'Progress — ' + userName : 'Progress';
-  document.getElementById('progress-text').textContent = done + ' / ' + nonRest + ' sessions';
-  document.getElementById('progress-fill').style.width = Math.round((done / nonRest) * 100) + '%';
+  const pct = Math.round((done / nonRest) * 100);
+  const streak = getStreak();
+  const circumference = 169.6;
+  const offset = circumference - (circumference * pct / 100);
+
+  document.getElementById('stat-done').textContent = done;
+  document.getElementById('stat-streak').innerHTML = '<span class="streak-fire">🔥</span> ' + streak;
+  document.getElementById('stat-pct').textContent = pct + '%';
+  document.getElementById('ring-fill').style.strokeDashoffset = offset;
+  document.getElementById('ring-pct').textContent = pct + '%';
+
+  const [title, sub] = getRingMessages(pct);
+  document.getElementById('ring-title').textContent = userName ? title + ', ' + userName.split(' ')[0] + '!' : title;
+  document.getElementById('ring-sub').textContent = sub;
+
   const celebrate = document.getElementById('celebrate');
   if (done === nonRest) {
     celebrate.style.display = 'block';
-    updateCelebration();
+    const displayName = userName || 'You';
+    document.getElementById('celebrate-title').textContent = displayName + '. 14 days. Done.';
+    document.getElementById('cert-name').textContent = userName || 'FIT 40 Member';
+    const now = new Date();
+    document.getElementById('cert-date').textContent = now.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
   } else {
     celebrate.style.display = 'none';
   }
@@ -260,7 +395,7 @@ function render() {
     html += '</div>';
   });
   container.innerHTML = html;
-  updateProgress();
+  updateStats();
 }
 
 function launchConfetti() {
@@ -269,19 +404,19 @@ function launchConfetti() {
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
   particles = [];
-  for (let i = 0; i < 180; i++) {
+  for (let i = 0; i < 200; i++) {
     particles.push({
       x: Math.random() * canvas.width, y: -10 - Math.random() * 200,
-      w: 8 + Math.random() * 8, h: 4 + Math.random() * 4,
+      w: 8 + Math.random() * 10, h: 4 + Math.random() * 5,
       color: CONFETTI_COLORS[Math.floor(Math.random() * CONFETTI_COLORS.length)],
-      vx: (Math.random() - 0.5) * 4, vy: 2 + Math.random() * 4,
-      angle: Math.random() * Math.PI * 2, spin: (Math.random() - 0.5) * 0.2, opacity: 1
+      vx: (Math.random() - 0.5) * 5, vy: 2 + Math.random() * 4,
+      angle: Math.random() * Math.PI * 2, spin: (Math.random() - 0.5) * 0.25, opacity: 1
     });
   }
   confettiActive = true;
   if (animFrame) cancelAnimationFrame(animFrame);
   animateConfetti();
-  setTimeout(stopConfetti, 4000);
+  setTimeout(stopConfetti, 5000);
 }
 
 function animateConfetti() {
@@ -290,7 +425,7 @@ function animateConfetti() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   particles.forEach(p => {
     p.x += p.vx; p.y += p.vy; p.angle += p.spin; p.vy += 0.07;
-    if (p.y > canvas.height * 0.75) p.opacity = Math.max(0, p.opacity - 0.02);
+    if (p.y > canvas.height * 0.75) p.opacity = Math.max(0, p.opacity - 0.018);
     ctx.save(); ctx.globalAlpha = p.opacity; ctx.translate(p.x, p.y); ctx.rotate(p.angle);
     ctx.fillStyle = p.color; ctx.fillRect(-p.w/2, -p.h/2, p.w, p.h); ctx.restore();
   });
@@ -303,7 +438,8 @@ function stopConfetti() { confettiActive = false; }
 function showConfirm() { document.getElementById('confirm-reset').style.display = 'block'; }
 function hideConfirm() { document.getElementById('confirm-reset').style.display = 'none'; }
 function resetTracker() {
-  completed = []; notes = {}; openNotes = {}; save(); hideConfirm(); stopConfetti();
+  completed = []; notes = {}; openNotes = {}; shownMilestones = [];
+  save(); hideConfirm(); stopConfetti();
   const canvas = document.getElementById('confetti-canvas');
   canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
   document.getElementById('celebrate').style.display = 'none';
