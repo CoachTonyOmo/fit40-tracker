@@ -61,8 +61,8 @@
   .notes-area textarea::placeholder { color: #555; }
 
   /* Milestone toast */
-  .milestone-toast { position: fixed; top: 20px; left: 50%; transform: translateX(-50%) translateY(-80px); background: #1a1a1a; border: 1px solid #39d353; border-radius: 12px; padding: 12px 20px; text-align: center; z-index: 10000; transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); min-width: 260px; }
-  .milestone-toast.show { transform: translateX(-50%) translateY(0); }
+  .milestone-toast { position: fixed; top: 20px; left: 50%; transform: translateX(-50%) translateY(-160px); background: #1a1a1a; border: 1px solid #39d353; border-radius: 12px; padding: 12px 20px; text-align: center; z-index: 10000; transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); min-width: 260px; pointer-events: none; }
+  .milestone-toast.show { transform: translateX(-50%) translateY(0); pointer-events: auto; }
   .milestone-toast .m-icon { font-size: 24px; margin-bottom: 4px; }
   .milestone-toast .m-title { font-size: 15px; font-weight: 700; color: #39d353; }
   .milestone-toast .m-sub { font-size: 12px; color: #888; margin-top: 2px; }
@@ -305,7 +305,7 @@ function showMilestone(m) {
   document.getElementById('m-sub').textContent = m.sub;
   toast.classList.add('show');
   if (toastTimer) clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => toast.classList.remove('show'), 3500);
+  toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 3500);
 }
 
 function toggleNotes(i, e) {
