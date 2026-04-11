@@ -9,19 +9,20 @@
   body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #111; color: #fff; min-height: 100vh; padding: 1rem; }
   .wrap { max-width: 480px; margin: 0 auto; padding-bottom: 3rem; }
   .header { background: #1a1a1a; border-radius: 12px; padding: 1.25rem 1.5rem; margin-bottom: 1rem; border: 1px solid #2a2a2a; }
-  .brand { font-size: 11px; font-weight: 600; color: #39d353; letter-spacing: 0.1em; margin-bottom: 4px; }
-  .header h1 { font-size: 22px; font-weight: 600; color: #fff; margin: 0 0 8px; }
-  .header p { font-size: 13px; color: #888; margin: 0; }
+  .logo-wrap { margin-bottom: 6px; }
+  .brand-sub { font-size: 13px; font-weight: 600; color: #39d353; letter-spacing: 0.1em; margin-bottom: 4px; }
+  .header h1 { font-size: 24px; font-weight: 600; color: #fff; margin: 0 0 8px; }
+  .header p { font-size: 16px; color: #888; margin: 0; }
   .name-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
-  .name-input { flex: 1; background: #2a2a2a; border: 1px solid #333; border-radius: 8px; color: #fff; font-size: 15px; font-weight: 600; padding: 7px 10px; font-family: inherit; }
+  .name-input { flex: 1; background: #2a2a2a; border: 1px solid #333; border-radius: 8px; color: #fff; font-size: 17px; font-weight: 600; padding: 7px 10px; font-family: inherit; }
   .name-input:focus { outline: none; border-color: #39d353; }
   .name-input::placeholder { color: #555; font-weight: 400; }
 
   /* Stats row */
   .stats-row { display: flex; gap: 8px; margin-bottom: 1rem; }
   .stat-card { flex: 1; background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 10px; padding: 10px 12px; text-align: center; }
-  .stat-value { font-size: 22px; font-weight: 700; color: #39d353; line-height: 1; margin-bottom: 4px; }
-  .stat-label { font-size: 10px; color: #666; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; }
+  .stat-value { font-size: 26px; font-weight: 700; color: #39d353; line-height: 1; margin-bottom: 4px; }
+  .stat-label { font-size: 13px; color: #666; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; }
   .streak-card { border-color: #2a1a00; }
   .streak-card .stat-value { color: #f5a623; }
   .streak-fire { font-size: 16px; }
@@ -32,57 +33,57 @@
   .ring-wrap svg { transform: rotate(-90deg); }
   .ring-bg { fill: none; stroke: #2a2a2a; stroke-width: 6; }
   .ring-fill { fill: none; stroke: #39d353; stroke-width: 6; stroke-linecap: round; transition: stroke-dashoffset 0.6s ease; }
-  .ring-pct { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 13px; font-weight: 700; color: #39d353; }
+  .ring-pct { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 15px; font-weight: 700; color: #39d353; }
   .ring-info { flex: 1; }
-  .ring-info .ring-title { font-size: 14px; font-weight: 600; color: #fff; margin-bottom: 2px; }
-  .ring-info .ring-sub { font-size: 12px; color: #888; }
+  .ring-info .ring-title { font-size: 17px; font-weight: 600; color: #fff; margin-bottom: 2px; }
+  .ring-info .ring-sub { font-size: 15px; color: #888; }
 
-  .week-label { font-size: 11px; font-weight: 600; color: #39d353; letter-spacing: 0.08em; background: #1a1a1a; border-radius: 8px; padding: 6px 12px; margin: 1rem 0 0.5rem; display: inline-block; border: 1px solid #2a2a2a; }
+  .week-label { font-size: 13px; font-weight: 600; color: #39d353; letter-spacing: 0.08em; background: #1a1a1a; border-radius: 8px; padding: 6px 12px; margin: 1rem 0 0.5rem; display: inline-block; border: 1px solid #2a2a2a; }
   .day-card { border-radius: 10px; border: 1px solid #2a2a2a; background: #1a1a1a; margin-bottom: 6px; overflow: hidden; transition: border-color 0.15s; }
   .day-card.completed { border-color: #39d353; }
   .day-card.rest { opacity: 0.7; }
   .day-row { display: flex; align-items: center; gap: 12px; padding: 12px; cursor: pointer; -webkit-tap-highlight-color: transparent; }
   .day-card.rest:not(.has-notes) .day-row { cursor: default; }
-  .day-num { width: 30px; height: 30px; border-radius: 50%; background: #2a2a2a; border: 1px solid #333; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600; color: #888; flex-shrink: 0; transition: all 0.2s; }
+  .day-num { width: 32px; height: 32px; border-radius: 50%; background: #2a2a2a; border: 1px solid #333; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 600; color: #888; flex-shrink: 0; transition: all 0.2s; }
   .day-card.completed .day-num { background: #39d353; border-color: #39d353; color: #111; }
   .day-info { flex: 1; min-width: 0; }
-  .day-name { font-size: 14px; font-weight: 600; color: #fff; }
-  .day-sub { font-size: 11px; color: #888; margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .day-name { font-size: 17px; font-weight: 600; color: #fff; }
+  .day-sub { font-size: 14px; color: #888; margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .check-icon { width: 22px; height: 22px; flex-shrink: 0; }
-  .notes-toggle { display: flex; align-items: center; gap: 6px; background: none; border: none; padding: 0 12px 10px; cursor: pointer; color: #666; font-size: 11px; font-weight: 600; font-family: inherit; -webkit-tap-highlight-color: transparent; }
+  .notes-toggle { display: flex; align-items: center; gap: 6px; background: none; border: none; padding: 0 12px 12px; cursor: pointer; color: #666; font-size: 14px; font-weight: 600; font-family: inherit; -webkit-tap-highlight-color: transparent; }
   .notes-toggle:hover { color: #39d353; }
   /* rest days with notes enabled */
   .note-dot { width: 5px; height: 5px; border-radius: 50%; background: #39d353; display: none; }
   .note-dot.visible { display: inline-block; }
   .notes-area { display: none; border-top: 1px solid #2a2a2a; padding: 10px 12px; background: #141414; }
   .notes-area.open { display: block; }
-  .notes-area textarea { width: 100%; background: #1e1e1e; border: 1px solid #333; border-radius: 8px; color: #ddd; font-size: 16px; padding: 8px 10px; resize: none; font-family: inherit; line-height: 1.5; }
+  .notes-area textarea { width: 100%; background: #1e1e1e; border: 1px solid #333; border-radius: 8px; color: #ddd; font-size: 17px; padding: 8px 10px; resize: none; font-family: inherit; line-height: 1.5; }
   .notes-area textarea:focus { outline: none; border-color: #39d353; }
   .notes-area textarea::placeholder { color: #555; }
-  .workout-toggle { display: flex; align-items: center; gap: 6px; background: none; border: none; padding: 0 12px 10px; cursor: pointer; color: #39d353; font-size: 11px; font-weight: 600; font-family: inherit; -webkit-tap-highlight-color: transparent; }
+  .workout-toggle { display: flex; align-items: center; gap: 6px; background: none; border: none; padding: 0 12px 12px; cursor: pointer; color: #39d353; font-size: 14px; font-weight: 600; font-family: inherit; -webkit-tap-highlight-color: transparent; }
   .workout-toggle:hover { color: #2db845; }
   .workout-area { display: none; border-top: 1px solid #2a2a2a; padding: 12px; background: #0d0d0d; }
   .workout-area.open { display: block; }
-  .workout-youtube { display: block; background: #39d353; color: #111; text-decoration: none; border-radius: 8px; padding: 10px 14px; font-size: 13px; font-weight: 700; text-align: center; margin-bottom: 12px; -webkit-tap-highlight-color: transparent; }
+  .workout-youtube { display: block; background: #39d353; color: #111; text-decoration: none; border-radius: 8px; padding: 14px 16px; font-size: 17px; font-weight: 700; text-align: center; margin-bottom: 12px; -webkit-tap-highlight-color: transparent; }
   .workout-youtube:hover { background: #2db845; }
-  .workout-section-label { font-size: 10px; font-weight: 700; color: #39d353; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 6px; }
-  .workout-circuit-label { font-size: 11px; font-weight: 700; color: #fff; margin: 10px 0 6px; }
-  .workout-move { font-size: 12px; color: #ccc; padding: 4px 0; border-bottom: 1px solid #1e1e1e; }
-  .workout-finisher { font-size: 12px; color: #f5c518; margin-top: 10px; padding: 8px 10px; background: #1a1a00; border-radius: 6px; border-left: 3px solid #f5c518; }
+  .workout-section-label { font-size: 13px; font-weight: 700; color: #39d353; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 6px; }
+  .workout-circuit-label { font-size: 16px; font-weight: 700; color: #fff; margin: 10px 0 6px; }
+  .workout-move { font-size: 16px; color: #ccc; padding: 4px 0; border-bottom: 1px solid #1e1e1e; }
+  .workout-finisher { font-size: 16px; color: #f5c518; margin-top: 10px; padding: 8px 10px; background: #1a1a00; border-radius: 6px; border-left: 3px solid #f5c518; }
 
   /* Milestone toast */
   .milestone-toast { position: fixed; top: 20px; left: 50%; transform: translateX(-50%) translateY(-160px); background: #1a1a1a; border: 1px solid #39d353; border-radius: 12px; padding: 12px 20px; text-align: center; z-index: 10000; transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); min-width: 260px; pointer-events: none; }
   .milestone-toast.show { transform: translateX(-50%) translateY(0); pointer-events: auto; }
   .milestone-toast .m-icon { font-size: 24px; margin-bottom: 4px; }
-  .milestone-toast .m-title { font-size: 15px; font-weight: 700; color: #39d353; }
-  .milestone-toast .m-sub { font-size: 12px; color: #888; margin-top: 2px; }
+  .milestone-toast .m-title { font-size: 17px; font-weight: 700; color: #39d353; }
+  .milestone-toast .m-sub { font-size: 15px; color: #888; margin-top: 2px; }
 
   .btn-row { display: flex; gap: 8px; margin-top: 1.5rem; }
-  .btn { flex: 1; padding: 12px 16px; border-radius: 10px; font-size: 13px; font-weight: 600; cursor: pointer; font-family: inherit; transition: all 0.15s; -webkit-tap-highlight-color: transparent; }
+  .btn { flex: 1; padding: 14px 16px; border-radius: 10px; font-size: 16px; font-weight: 600; cursor: pointer; font-family: inherit; transition: all 0.15s; -webkit-tap-highlight-color: transparent; }
   .btn-danger { background: transparent; border: 1px solid #5a1a1a; color: #e05555; }
   .btn-danger:hover { background: #2a1010; }
   .confirm-reset { display: none; background: #1a1a1a; border: 1px solid #333; border-radius: 10px; padding: 1rem; margin-top: 0.75rem; text-align: center; }
-  .confirm-reset p { font-size: 13px; color: #888; margin: 0 0 0.75rem; }
+  .confirm-reset p { font-size: 16px; color: #888; margin: 0 0 0.75rem; }
   .confirm-row { display: flex; gap: 8px; }
   .btn-cancel { background: #2a2a2a; border: 1px solid #333; color: #aaa; }
   .btn-cancel:hover { background: #333; }
@@ -92,38 +93,38 @@
   /* Celebrate */
   .celebrate { display: none; background: #1a1a1a; border-radius: 12px; padding: 1.5rem; text-align: center; margin-top: 1rem; border: 1px solid #39d353; }
   .celebrate-icon { font-size: 40px; margin-bottom: 8px; }
-  .celebrate h2 { color: #39d353; font-size: 22px; font-weight: 700; margin: 0 0 8px; }
-  .celebrate p { color: #aaa; font-size: 14px; margin: 0 0 1rem; line-height: 1.6; }
-  .celebrate-quote { font-style: italic; color: #777; font-size: 13px; border-left: 3px solid #39d353; text-align: left; padding-left: 12px; margin: 1rem 0; line-height: 1.6; }
+  .celebrate h2 { color: #39d353; font-size: 26px; font-weight: 700; margin: 0 0 8px; }
+  .celebrate p { color: #aaa; font-size: 17px; margin: 0 0 1rem; line-height: 1.6; }
+  .celebrate-quote { font-style: italic; color: #777; font-size: 16px; border-left: 3px solid #39d353; text-align: left; padding-left: 12px; margin: 1rem 0; line-height: 1.6; }
   .reflect-section { text-align: left; margin: 1rem 0; }
-  .reflect-label { font-size: 12px; font-weight: 600; color: #39d353; display: block; margin-bottom: 4px; margin-top: 12px; }
-  .reflect-section textarea { width: 100%; background: #141414; border: 1px solid #333; border-radius: 8px; color: #ddd; font-size: 16px; padding: 8px 10px; resize: none; font-family: inherit; margin-bottom: 4px; }
+  .reflect-label { font-size: 15px; font-weight: 600; color: #39d353; display: block; margin-bottom: 4px; margin-top: 12px; }
+  .reflect-section textarea { width: 100%; background: #141414; border: 1px solid #333; border-radius: 8px; color: #ddd; font-size: 17px; padding: 8px 10px; resize: none; font-family: inherit; margin-bottom: 4px; }
   .reflect-section textarea:focus { outline: none; border-color: #39d353; }
   .reflect-section textarea::placeholder { color: #555; }
 
   /* Certificate */
   .certificate { background: #0d0d0d; border: 2px solid #39d353; border-radius: 16px; padding: 1.5rem; margin: 1.25rem 0; text-align: center; position: relative; overflow: hidden; }
   .certificate::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, #39d353, #7b2fbe, #39d353); }
-  .cert-label { font-size: 10px; font-weight: 600; color: #39d353; letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 8px; }
-  .cert-title { font-size: 13px; color: #888; margin-bottom: 6px; }
-  .cert-name { font-size: 26px; font-weight: 700; color: #fff; margin-bottom: 6px; letter-spacing: -0.02em; }
-  .cert-program { font-size: 13px; color: #39d353; font-weight: 600; margin-bottom: 12px; }
+  .cert-label { font-size: 13px; font-weight: 600; color: #39d353; letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 8px; }
+  .cert-title { font-size: 15px; color: #888; margin-bottom: 6px; }
+  .cert-name { font-size: 28px; font-weight: 700; color: #fff; margin-bottom: 6px; letter-spacing: -0.02em; }
+  .cert-program { font-size: 15px; color: #39d353; font-weight: 600; margin-bottom: 12px; }
   .cert-divider { height: 1px; background: #2a2a2a; margin: 12px 0; }
   .cert-bottom { display: flex; justify-content: space-between; align-items: flex-end; }
   .cert-sig { text-align: left; }
-  .cert-sig-name { font-size: 13px; font-weight: 700; color: #fff; }
-  .cert-sig-title { font-size: 11px; color: #666; }
+  .cert-sig-name { font-size: 16px; font-weight: 700; color: #fff; }
+  .cert-sig-title { font-size: 14px; color: #666; }
   .cert-date { text-align: right; font-size: 11px; color: #666; }
   .cert-badge { width: 44px; height: 44px; border-radius: 50%; background: #39d353; display: flex; align-items: center; justify-content: center; font-size: 20px; margin: 0 auto 8px; }
-  .screenshot-hint { font-size: 11px; color: #555; margin-top: 8px; }
+  .screenshot-hint { font-size: 14px; color: #555; margin-top: 8px; }
 
-  .upgrade-btn { background: #39d353; color: #111; border: none; border-radius: 10px; padding: 14px 16px; font-size: 14px; font-weight: 700; text-align: center; cursor: pointer; width: 100%; margin-top: 1rem; font-family: inherit; -webkit-tap-highlight-color: transparent; }
+  .upgrade-btn { background: #39d353; color: #111; border: none; border-radius: 10px; padding: 16px 16px; font-size: 17px; font-weight: 700; text-align: center; cursor: pointer; width: 100%; margin-top: 1rem; font-family: inherit; -webkit-tap-highlight-color: transparent; }
   .upgrade-btn:hover { background: #2db845; }
-  .reset-btn-full { background: transparent; border: 1px solid #333; color: #888; border-radius: 10px; padding: 12px 16px; font-size: 13px; font-weight: 600; cursor: pointer; width: 100%; margin-top: 8px; font-family: inherit; }
+  .reset-btn-full { background: transparent; border: 1px solid #333; color: #888; border-radius: 10px; padding: 14px 16px; font-size: 16px; font-weight: 600; cursor: pointer; width: 100%; margin-top: 8px; font-family: inherit; }
   .reset-btn-full:hover { background: #2a2a2a; }
   #confetti-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 9999; }
   .add-to-home { background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 10px; padding: 10px 14px; margin-bottom: 1rem; }
-  .add-to-home p { font-size: 12px; color: #888; line-height: 1.5; margin: 0; }
+  .add-to-home p { font-size: 15px; color: #888; line-height: 1.5; margin: 0; }
   .add-to-home strong { color: #39d353; }
 </style>
 </head>
@@ -137,7 +138,23 @@
 
 <div class="wrap">
   <div class="header">
-    <div class="brand">CTO FIT — FIT 40 METHOD</div>
+    <div class="logo-wrap"><svg viewBox="0 0 167 32" style="height:28px;width:auto;display:block;" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M95.0339 31.0605L102.526 1.76752H122.109L121.312 4.91463H105.684L103.136 14.8109H117.296L116.499 17.958H102.339L98.9895 31.0605H95.0339Z" fill="white"/>
+<path d="M99.7191 31.985H93.8326L101.8 0.842957H123.31L122.045 5.83914H106.414L104.341 13.8863H118.498L117.233 18.8825H103.068L99.7191 31.985ZM96.2351 30.1359H98.2597L101.609 17.0334H115.769L116.099 15.7354H101.931L104.958 3.99007H120.582L120.911 2.69203H103.256L96.2351 30.1359Z" fill="white"/>
+<path d="M133.83 1.74164L126.338 31.0309H122.382L129.874 1.74164H133.83Z" fill="white"/>
+<path d="M127.067 31.9554H121.181L129.144 0.817078H135.031L127.067 31.9554ZM123.583 30.1063H125.608L132.628 2.66615H130.604L123.583 30.1063Z" fill="white"/>
+<path d="M140.509 4.88503L141.306 1.73792H165.803L165.006 4.88503H154.737L148.042 31.0309H144.087L150.782 4.88503H140.513H140.509Z" fill="white"/>
+<path d="M148.765 31.9554H142.878L149.573 5.80954H139.304L140.569 0.813354H166.993L165.728 5.80954H155.456L148.761 31.9554H148.765ZM145.284 30.1063H147.309L154.004 3.96047H164.272L164.602 2.66242H142.036L141.707 3.96047H151.979L145.284 30.1063Z" fill="white"/>
+<path d="M31.7007 12.3368H23.0337C23.2658 4.27113 10.7032 7.67712 10.0034 16.4565C7.6308 25.3949 18.5244 26.6708 21.6005 20.0622H30.3311C25.9078 35.8015 -2.88108 34.8289 1.27278 15.5394C3.22247 -2.13774 32.7635 -4.59701 31.7007 12.3368Z" fill="white"/>
+<path d="M14.3031 31.9702C-0.444933 32.377 -3.6071 16.9853 3.9821 6.91897C11.1709 -3.58744 34.8591 -2.50019 32.5614 13.2613H22.0083C23.494 6.71188 14.464 8.18004 12.4844 12.3515C5.8607 24.9844 18.674 25.9311 20.9381 19.1339H31.5435C29.9643 26.7928 22.3152 32.1662 14.3031 31.9665V31.9702ZM18.7938 1.87841C7.54469 1.26452 -1.01749 13.4536 2.72098 23.6235C7.48107 34.1964 25.4437 30.9976 29.0325 20.983H22.2254C18.0641 28.0612 6.59043 25.8571 9.079 16.3012C9.73014 12.8582 11.2645 9.82571 14.1909 8.11347C17.4952 6.03512 23.9431 6.50848 23.988 11.4122H30.8138C31.2104 4.83322 24.8187 1.64543 18.7938 1.87841Z" fill="white"/>
+<path d="M89.461 16.5158C87.6086 34.9214 54.6397 37.0664 58.5952 15.5987C60.4065 -2.92532 93.4577 -5.12202 89.461 16.5158ZM80.7304 15.5987C83.1292 6.7675 72.7782 5.42138 68.9612 11.8672C66.6148 15.7577 65.3125 24.4261 72.1271 24.1229C77.0593 24.219 79.9857 20.1954 80.7304 15.5987Z" fill="white"/>
+<path d="M71.8127 31.9703C48.1357 31.741 56.1889 -1.12062 76.3033 0.0294992C99.8531 0.30686 91.8971 33.1352 71.8127 31.9703ZM76.3033 1.87857C58.6775 0.676674 50.6654 29.9733 71.8127 30.1213C89.4123 31.3416 97.3233 2.07457 76.3033 1.87857ZM72.127 25.0474C60.949 24.8403 66.8804 5.87626 75.9927 6.95242C87.0098 7.16321 81.1982 26.1569 72.127 25.0474ZM75.9927 8.80149C69.1183 7.66616 63.8642 23.3426 72.127 23.202C79.0277 24.3485 84.046 8.69424 75.9927 8.80149Z" fill="white"/>
+<path d="M33.1893 7.75122L34.8284 1.34235H62.5731L60.9341 7.75122H51.3315L45.5985 30.6353H37.055L42.7881 7.75122H33.1855H33.1893Z" fill="white"/>
+<path d="M46.3319 31.5562H35.8612L41.5943 8.67207H31.988L34.0986 0.414124H63.7744L61.6638 8.67207H52.065L46.3319 31.5562ZM38.2525 29.7071H44.8687L50.6018 6.823H60.2081L61.3719 2.26319H35.5544L34.3905 6.823H43.9856L38.2525 29.7071Z" fill="white"/>
+<path d="M61.9446 7.68097H30.031L31.8497 1.35345H64.9159L61.9446 7.68097Z" fill="white"/>
+<path d="M62.5433 8.60548H28.796L31.1424 0.428894H66.3828L62.5433 8.60548ZM31.2696 6.75641H61.3495L63.4527 2.27796H32.5569L31.2696 6.75641Z" fill="white"/>
+</svg></div>
+    <div class="brand-sub">FIT 40 METHOD™</div>
     <h1>14-Day Kickstart Tracker</h1>
     <div class="name-row">
       <input class="name-input" id="name-input" type="text" placeholder="Enter your name" maxlength="40" oninput="saveName(this.value)" />
@@ -244,7 +261,6 @@ const DAYS = [
   },
   {week:1,day:3,name:"Wednesday",sub:"Walking — move your body, clear your head",rest:false,ph:"How are you feeling mid-week?"},
   {week:1,day:4,name:"Thursday",sub:"OTM-X: Foundation Flow",rest:false,ph:"Reps completed? How did the finisher feel?",
-    youtube:"https://youtu.be/BjCJ66Ov9iE?si=jME7Gr48sWdJkWg4",
     workout:{
       warmup:["Pushups x 5","Air Squats x 10","Inchworm x 3"],
       circuit:{label:"Main Circuit — 16 Min / 4 Rounds",moves:["Min 1) Pushups x 8","Min 2) Air Squats x 15","Min 3) Jumping Air Squats x 10","Min 4) Mountain Climbers x 10"]},
@@ -285,7 +301,7 @@ const MILESTONES = {
 };
 
 const CONFETTI_COLORS = ['#39d353','#7b2fbe','#ffffff','#f5c518','#39a0d3','#d353a0'];
-let completed = [], notes = {}, openNotes = {}, openWorkout = {}, particles = [], animFrame = null, confettiActive = false;
+let completed = [], notes = {}, openNotes = {}, openWorkout = {1:true, 3:true, 8:true, 10:true}, particles = [], animFrame = null, confettiActive = false;
 let userName = '', toastTimer = null, shownMilestones = [];
 
 try { completed = JSON.parse(localStorage.getItem('fit40_done') || '[]'); } catch(e) {}
@@ -448,7 +464,9 @@ function render() {
       html += '<button class="workout-toggle" onclick="toggleWorkout(' + i + ', event)">';
       html += (wOpen ? '▲ hide workout' : '▶ view workout + follow along') + '</button>';
       html += '<div class="workout-area' + (wOpen ? ' open' : '') + '">';
-      html += '<a class="workout-youtube" href="' + d.youtube + '" target="_blank">▶  Train With Coach Tony — Watch Now</a>';
+      if (d.youtube) {
+        html += '<a class="workout-youtube" href="' + d.youtube + '" target="_blank">▶  Train With Coach Tony — Watch Now</a>';
+      }
       html += '<div class="workout-section-label">Warm-Up — 2 Rounds</div>';
       wo.warmup.forEach(function(m) { html += '<div class="workout-move">• ' + m + '</div>'; });
       html += '<div class="workout-circuit-label">' + wo.circuit.label + '</div>';
@@ -510,7 +528,7 @@ function stopConfetti() { confettiActive = false; }
 function showConfirm() { document.getElementById('confirm-reset').style.display = 'block'; }
 function hideConfirm() { document.getElementById('confirm-reset').style.display = 'none'; }
 function resetTracker() {
-  completed = []; notes = {}; openNotes = {}; openWorkout = {}; shownMilestones = [];
+  completed = []; notes = {}; openNotes = {}; openWorkout = {1:true, 3:true, 8:true, 10:true}; shownMilestones = [];
   save(); hideConfirm(); stopConfetti();
   const canvas = document.getElementById('confetti-canvas');
   canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
