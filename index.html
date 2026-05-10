@@ -110,8 +110,8 @@
       --violet-light:#5D00E8;
     }
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-    html{scroll-behavior:smooth;}
-    body{background:var(--black);color:var(--white);font-family:'Sora',sans-serif;font-size:16px;line-height:1.7;overflow-x:hidden;}
+    html{scroll-behavior:smooth;overflow-x:hidden;max-width:100%;}
+    body{background:var(--black);color:var(--white);font-family:'Sora',sans-serif;font-size:16px;line-height:1.7;overflow-x:hidden;max-width:100%;position:relative;}
 
     /* NAV */
     nav{position:fixed;top:0;left:0;right:0;z-index:200;height:68px;display:flex;align-items:center;justify-content:space-between;padding:0 48px;background:rgba(0,0,0,0.85);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.06);}
@@ -281,26 +281,48 @@
     @media(max-width:900px){
       nav{padding:0 20px;}
       .nav-links{display:none;}
-      .hero-content{padding:120px 24px 80px;max-width:100%;}
+      .hero-content{padding:100px 24px 60px;max-width:100%;}
       .hero-h1{font-size:52px;}
+      .hero-proof{flex-wrap:wrap;gap:28px;}
       .strip-inner{grid-template-columns:1fr;}
-      .strip-item{border-right:none;border-bottom:1px solid rgba(255,255,255,0.06);}
+      .strip-item{border-right:none;border-bottom:1px solid rgba(255,255,255,0.06);padding:28px 20px;}
       .feature-row,.feature-row.reverse{grid-template-columns:1fr;direction:ltr;}
-      .feature-content{padding:48px 28px;}
+      .feature-img{min-height:280px;}
+      .feature-content{padding:48px 24px;}
       .f-h2{font-size:34px;}
       .pillars{padding:64px 20px;}
       .pillars-grid{grid-template-columns:1fr 1fr;}
       .section-h2{font-size:36px;}
       .coach{grid-template-columns:1fr;}
       .coach-img{min-height:320px;}
-      .coach-content{padding:48px 28px;}
+      .coach-content{padding:48px 24px;}
+      .coach-content::before{display:none;}
+      .credentials{padding:56px 20px;}
+      .creds-heading{font-size:32px;}
+      .creds-body{font-size:15px;}
       .testimonials{padding:64px 20px;}
       .testimonials-grid{grid-template-columns:1fr;}
       .final-cta{padding:80px 24px;}
-      .final-h2{font-size:52px;}
+      .final-h2{font-size:44px;}
       footer{padding:48px 20px 32px;}
       .footer-top{grid-template-columns:1fr 1fr;gap:32px;}
       .footer-bottom{flex-direction:column;align-items:flex-start;}
+    }
+    @media(max-width:480px){
+      .hero-h1{font-size:40px;}
+      .hero-sub{font-size:15px;}
+      .hero-proof{gap:20px;}
+      .hero-stat-num{font-size:36px;}
+      .hero-actions{flex-direction:column;align-items:center;width:100%;}
+      .btn-primary,.btn-ghost{width:100%;text-align:center;}
+      .pillars-grid{grid-template-columns:1fr;}
+      .section-h2{font-size:30px;}
+      .f-h2{font-size:28px;}
+      .coach-quote{font-size:22px;}
+      .final-h2{font-size:36px;}
+      .footer-top{grid-template-columns:1fr;}
+      .creds-heading{font-size:28px;}
+      .testi{padding:28px 20px;}
     }
   </style>
 </head>
