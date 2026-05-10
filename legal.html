@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Legal — CTO FIT</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Sora:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --neon:     #00F261;
+      --electric: #2D7BFF;
+      --violet:   #5D00E8;
+      --black:    #000000;
+      --charcoal: #111111;
+      --graphite: #1C1C1C;
+      --white:    #FFFFFF;
+      --cream:    #F7F5F0;
+      --stone-bg: #F2EFE8;
+      --stone-card: #E8E4DB;
+      --pebble:   #DDD9CF;
+      --stone-text-head:  #1A1A1A;
+      --stone-text-body:  #4A4438;
+      --stone-text-muted: #7A6E62;
+      --electric-light:   #1a5cbf;
+      --violet-light:     #5D00E8;
+      --radius-btn: 4px;
+      --radius-badge: 2px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--cream);
+      color: var(--stone-text-body);
+      font-family: 'Sora', sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+    }
+    nav {
+      background: var(--charcoal);
+      padding: 0 40px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 2px solid var(--neon);
+    }
+    .nav-logo {
+      font-family: 'Oswald', sans-serif;
+      font-weight: 700;
+      font-size: 22px;
+      color: var(--white);
+      letter-spacing: 0.08em;
+      text-decoration: none;
+      text-transform: uppercase;
+    }
+    .nav-logo span { color: var(--neon); }
+    .nav-links { display: flex; gap: 32px; list-style: none; }
+    .nav-links a {
+      font-family: 'Oswald', sans-serif;
+      font-weight: 500;
+      font-size: 13px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.6);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--neon); }
+    .hero {
+      background: var(--charcoal);
+      padding: 64px 40px 56px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .hero-inner { max-width: 860px; margin: 0 auto; }
+    .eyebrow {
+      font-family: 'Sora', sans-serif;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--neon);
+      margin-bottom: 16px;
+    }
+    .hero h1 {
+      font-family: 'Oswald', sans-serif;
+      font-weight: 700;
+      font-size: 56px;
+      line-height: 1.05;
+      color: var(--white);
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+      margin-bottom: 20px;
+    }
+    .hero p { font-size: 15px; color: rgba(255,255,255,0.5); max-width: 560px; }
+    .tab-nav {
+      background: var(--stone-bg);
+      border-bottom: 1px solid var(--pebble);
+      padding: 0 40px;
+      display: flex;
+      position: sticky;
+      top: 64px;
+      z-index: 90;
+      overflow-x: auto;
+    }
+    .tab-btn {
+      font-family: 'Oswald', sans-serif;
+      font-weight: 600;
+      font-size: 13px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--stone-text-muted);
+      text-decoration: none;
+      padding: 18px 24px;
+      border-bottom: 3px solid transparent;
+      transition: color 0.2s, border-color 0.2s;
+      white-space: nowrap;
+    }
+    .tab-btn:hover { color: var(--stone-text-head); border-bottom-color: var(--pebble); }
+    .tab-btn.active { color: var(--violet-light); border-bottom-color: var(--violet-light); }
+    .content-wrap { max-width: 860px; margin: 0 auto; padding: 0 40px 80px; }
+    .legal-section { padding-top: 64px; }
+    .section-header { border-top: 2px solid var(--neon); padding-top: 32px; margin-bottom: 40px; }
+    .section-eyebrow {
+      font-family: 'Sora', sans-serif;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--stone-text-muted);
+      margin-bottom: 10px;
+    }
+    .section-header h2 {
+      font-family: 'Oswald', sans-serif;
+      font-weight: 700;
+      font-size: 40px;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+      color: var(--stone-text-head);
+      line-height: 1.1;
+    }
+    .effective-date {
+      display: inline-block;
+      margin-top: 12px;
+      font-size: 13px;
+      color: var(--stone-text-muted);
+      background: var(--stone-card);
+      padding: 4px 12px;
+      border-radius: var(--radius-badge);
+    }
+    .legal-article { margin-bottom: 36px; }
+    .legal-article h3 {
+      font-family: 'Oswald', sans-serif;
+      font-weight: 600;
+      font-size: 17px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--stone-text-head);
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--pebble);
+    }
+    .legal-article h4 {
+      font-family: 'Oswald', sans-serif;
+      font-weight: 600;
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--stone-text-head);
+      margin: 16px 0 8px;
+    }
+    .legal-article p { font-size: 15px; color: var(--stone-text-body); margin-bottom: 12px; }
+    .legal-article p.caps { font-size: 13px; font-weight: 500; color: var(--stone-text-head); }
+    .legal-article ul { padding-left: 20px; margin-bottom: 12px; }
+    .legal-article ul li { font-size: 15px; color: var(--stone-text-body); margin-bottom: 6px; }
+    .legal-article a { color: var(--electric-light); text-decoration: none; }
+    .legal-article a:hover { text-decoration: underline; }
+    .section-divider { height: 1px; background: var(--pebble); margin: 72px 0 0; }
+    .contact-card {
+      background: var(--graphite);
+      border-top: 2px solid var(--electric);
+      padding: 36px 40px;
+      margin-top: 48px;
+    }
+    .contact-card .card-label {
+      font-family: 'Sora', sans-serif;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--electric);
+      margin-bottom: 10px;
+    }
+    .contact-card h4 {
+      font-family: 'Oswald', sans-serif;
+      font-weight: 600;
+      font-size: 20px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--white);
+      margin-bottom: 16px;
+    }
+    .contact-card p { font-size: 14px; color: rgba(255,255,255,0.55); line-height: 1.9; }
+    .contact-card a { color: rgba(255,255,255,0.8); text-decoration: none; }
+    .contact-card a:hover { color: var(--neon); }
+    .back-top {
+      display: inline-block;
+      margin-top: 48px;
+      font-family: 'Oswald', sans-serif;
+      font-weight: 600;
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--stone-text-muted);
+      text-decoration: none;
+      border: 1px solid var(--pebble);
+      padding: 10px 20px;
+      border-radius: var(--radius-btn);
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .back-top:hover { color: var(--stone-text-head); border-color: var(--stone-text-head); }
+    footer { background: var(--black); padding: 40px; border-top: 2px solid var(--charcoal); }
+    .footer-inner {
+      max-width: 860px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .footer-logo {
+      font-family: 'Oswald', sans-serif;
+      font-weight: 700;
+      font-size: 18px;
+      color: var(--white);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-decoration: none;
+    }
+    .footer-logo span { color: var(--neon); }
+    .footer-copy { font-size: 13px; color: rgba(255,255,255,0.3); }
+    .footer-tagline {
+      font-family: 'Oswald', sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.2);
+    }
+    @media (max-width: 600px) {
+      nav { padding: 0 20px; }
+      .nav-links { display: none; }
+      .hero { padding: 48px 20px 40px; }
+      .hero h1 { font-size: 36px; }
+      .tab-nav { padding: 0 20px; }
+      .content-wrap { padding: 0 20px 60px; }
+      .contact-card { padding: 28px 20px; }
+      footer { padding: 32px 20px; }
+      .footer-inner { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="https://www.ctofit.com" class="nav-logo">CTO <span>FIT</span></a>
+    <ul class="nav-links">
+      <li><a href="#terms">Terms &amp; Conditions</a></li>
+      <li><a href="#privacy">Privacy Policy</a></li>
+      <li><a href="#disclaimer">Disclaimer</a></li>
+      <li><a href="#purchase">Terms of Purchase</a></li>
+    </ul>
+  </nav>
+
+  <div class="hero">
+    <div class="hero-inner">
+      <div class="eyebrow">Legal &amp; Policies</div>
+      <h1>Terms &amp; Privacy</h1>
+      <p>CTO Health LLC operates ctofit.com. These documents govern your use of our products, services, and community. Read them. Know your rights.</p>
+    </div>
+  </div>
+
+  <div class="tab-nav">
+    <a href="#terms" class="tab-btn active" id="tab-terms">Terms &amp; Conditions</a>
+    <a href="#privacy" class="tab-btn" id="tab-privacy">Privacy Policy</a>
+    <a href="#disclaimer" class="tab-btn" id="tab-disclaimer">Disclaimer</a>
+    <a href="#purchase" class="tab-btn" id="tab-purchase">Terms of Purchase</a>
+  </div>
+
+  <div class="content-wrap">
+
+    <!-- TERMS & CONDITIONS -->
+    <section class="legal-section" id="terms">
+      <div class="section-header">
+        <div class="section-eyebrow">Document 1 of 4</div>
+        <h2>Terms &amp; Conditions</h2>
+        <span class="effective-date">Last Updated: January 23, 2025</span>
+      </div>
+      <div class="legal-article">
+        <p>The following Terms and Conditions of Use ("Terms") are entered into by and between You and CTO Health LLC ("Company," "we," or "us").</p>
+        <p>These Terms, together with our Privacy Policy, Disclaimer, and any other documents expressly incorporated by reference, govern your use of the website www.ctofit.com and any subdomains ("Website"), including all materials, resources, information, and services on the Website, whether as a guest or registered user.</p>
+        <p>By accessing or using the Website, you agree to be bound by these Terms without modification and acknowledge reading them. If you disagree with any part of the Terms, you may not access the Website.</p>
+      </div>
+      <div class="legal-article">
+        <h3>Privacy Policy</h3>
+        <p>Your use of the Website is also subject to our Privacy Policy. Please review our Privacy Policy, which also governs the Website and informs users of our data collection practices. Your agreement to the Privacy Policy is hereby incorporated into these Terms.</p>
+      </div>
+      <div class="legal-article">
+        <h3>Disclaimer</h3>
+        <p>Your use of the Website is also subject to our Disclaimer. Please review our Disclaimer, which also governs the Website and informs users of various limitations regarding the information provided on the Website. Your agreement to the Disclaimer is hereby incorporated into these Terms.</p>
+      </div>
+      <div class="legal-article">
+        <h3>No Use by Minors</h3>
+        <p>To access or use the Website, you must be 18 years of age or older and have the requisite power and authority to enter into these Terms. Children under the age of 18 are prohibited from using the Website.</p>
+      </div>
+      <div class="legal-article">
+        <h3>Lawful Purposes</h3>
+        <p>You may use the Website for lawful purposes only. You agree to be financially responsible for all purchases made by you or someone acting on your behalf through the Website.</p>
+        <p>You agree to use the Website and to purchase services, digital courses, or products through the Website for legitimate, non-commercial purposes only. You shall not post or transmit through the Website any material that violates or infringes the rights of others, or that is threatening, abusive, defamatory, libelous, invasive of privacy or publicity rights, vulgar, obscene, profane, or otherwise objectionable, contains injurious formulas, recipes, or instructions, or that encourages conduct that would constitute a criminal offense, give rise to civil liability, or otherwise violate any law.</p>
+      </div>
+      <div class="legal-article">
+        <h3>Use of Free Downloadable Content</h3>
+        <p>We may make resources on this Website accessible to users in exchange for providing an email address ("Gated Content"). We grant you a limited, personal, non-exclusive, non-transferable license to use the Gated Content for your own personal or internal business use. Except as otherwise provided, you acknowledge and agree that you have no right to modify, edit, copy, reproduce, create derivative works of, reverse engineer, alter, enhance, or in any way exploit any of the Gated Content in any manner.</p>
+        <p>You agree that you may only use the Gated Content for your personal or internal business use. You agree that you will not sell, redistribute, or create any derivative works based upon the Gated Content and you will not offer any competing products or services based upon any information contained in the Gated Content.</p>
+      </div>
+      <div class="legal-article">
+        <h3>Limitation of Liability</h3>
+        <p class="caps">YOU AGREE THAT UNDER NO CIRCUMSTANCES SHALL WE BE LIABLE FOR DIRECT, INDIRECT, INCIDENTAL, CONSEQUENTIAL, SPECIAL, PUNITIVE, EXEMPLARY, OR ANY OTHER DAMAGES ARISING OUT OF YOUR USE OF THE WEBSITE OR RESOURCES, PRODUCTS, OR SERVICES AVAILABLE THROUGH THE WEBSITE.</p>
+        <p class="caps">ADDITIONALLY, WE ARE NOT LIABLE FOR DAMAGES IN CONNECTION WITH:</p>
+        <ul>
+          <li>Any failure of performance, error, omission, denial of service, attack, interruption, deletion, defect, delay in operation or transmission, computer virus, or line or system failure;</li>
+          <li>Loss of revenue, anticipated profits, business, savings, goodwill, or data; and</li>
+          <li>Third-party theft of, destruction of, unauthorized access to, alteration of, or use of your information or property, regardless of our negligence, gross negligence, failure of an essential purpose, and whether such liability arises in negligence, contract, tort, or any other theory of legal liability, even if we have been advised of the possibility of or could have foreseen the damages.</li>
+        </ul>
+        <p class="caps">IN THOSE STATES THAT DO NOT ALLOW THE EXCLUSION OR LIMITATION OF LIABILITY FOR DAMAGES, OUR LIABILITY IS LIMITED TO THE FULLEST EXTENT PERMITTED BY LAW. IN NO EVENT SHALL OUR TOTAL LIABILITY TO YOU EXCEED THE TOTAL PURCHASE PRICE OF ANY PRODUCTS OR SERVICES YOU HAVE PURCHASED FROM US.</p>
+      </div>
+      <div class="legal-article">
+        <h3>Governing Law; Jurisdiction</h3>
+        <p>These Terms, including the Privacy Policy and Disclaimers, shall be construed in accordance with, and governed by, the laws of the State of Ohio, and the courts of Franklin County, Ohio shall have jurisdiction to hear and determine any dispute arising in relation to these Terms.</p>
+      </div>
+      <div class="legal-article">
+        <h3>Contact Information</h3>
+        <p>The owner of this website is CTO Health LLC. You may contact us by email at <a href="mailto:support@ctofit.com">support@ctofit.com</a> or by mail at:</p>
+        <p><strong style="color:var(--stone-text-head)">CTO Health LLC</strong><br>7385 State Rt 3, Unit #482<br>Westerville, OH 43082</p>
+      </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- PRIVACY POLICY -->
+    <section class="legal-section" id="privacy">
+      <div class="section-header">
+        <div class="section-eyebrow">Document 2 of 4</div>
+        <h2>Privacy Policy</h2>
+        <span class="effective-date">Last Updated: January 23, 2025</span>
+      </div>
+      <div class="legal-article">
+        <p>This Privacy Policy describes how CTO Health LLC ("we" or "us") collects, uses, and shares your personal information when you use our website www.ctofit.com and any of our subdomains (the "Website").</p>
+      </div>
+      <div class="legal-article">
+        <h3>Personal Information We Collect</h3>
+        <h4>Device Information</h4>
+        <p>When you visit the Website, we automatically collect certain information about your device, including information about your web browser, IP address, time zone, and some of the cookies installed on your device. Additionally, as you browse the Website, we collect information about individual web pages or products that you view, what websites or search terms referred you to the Website, and how you interact with the Website.</p>
+        <p>We collect Device Information using the following technologies:</p>
+        <ul>
+          <li><strong>Cookies:</strong> Data files placed on your device that often include an anonymous unique identifier. For more information about cookies and disabling them, visit <a href="http://www.allaboutcookies.org" target="_blank">allaboutcookies.org</a>.</li>
+          <li><strong>Log Files:</strong> Track actions on the Website and collect data such as your IP address, browser type, Internet service provider, referring/exit pages, and timestamps.</li>
+          <li><strong>Web Beacons, Tags, and Pixels:</strong> Electronic files used to record how you browse the Website.</li>
+        </ul>
+        <h4>Provided Information</h4>
+        <p>We also collect data you provide directly when you register online or place an order, complete a survey or provide feedback, sign up for our email newsletter, download a free resource in exchange for your email address, or submit an intake form for services or programs. This includes personal identification information (name, email address, phone number) and billing information (billing address, payment details).</p>
+      </div>
+      <div class="legal-article">
+        <h3>How We Use Your Personal Information</h3>
+        <p>We use your Provided Information to fulfill orders placed through the Website, communicate with you, screen for potential risk or fraud, and provide information or marketing content aligned with your preferences.</p>
+        <p>We use Device Information to improve and optimize the Website, detect and prevent fraud, and support affiliate marketing.</p>
+      </div>
+      <div class="legal-article">
+        <h3>How We Share Your Personal Information</h3>
+        <p>We may share your Personal Information with:</p>
+        <ul>
+          <li><strong>Google Analytics:</strong> For website analytics and optimization.</li>
+          <li><strong>Stripe and Podia:</strong> To securely process payments and manage customer relationships.</li>
+          <li><strong>GoDaddy:</strong> For website hosting services.</li>
+        </ul>
+        <p>We may also share information to comply with laws, respond to legal requests, or protect our rights.</p>
+      </div>
+      <div class="legal-article">
+        <h3>How We Store Your Data</h3>
+        <p>We use the following providers to process and store your data: GoDaddy (website hosting), Podia (email marketing and customer relationship management), and Stripe (payment processing). We use commercially reasonable security measures to protect your data. However, no network is completely secure, and you provide your information at your own risk.</p>
+      </div>
+      <div class="legal-article">
+        <h3>Email Marketing</h3>
+        <p>By subscribing or purchasing from our Website, you agree to receive our emails. You can unsubscribe at any time but may miss important updates.</p>
+      </div>
+      <div class="legal-article">
+        <h3>Behavioral Advertising</h3>
+        <p>We use targeted advertising through Meta (Facebook &amp; Instagram) and Google. Visit the Digital Advertising Alliance's portal at <a href="http://optout.aboutads.info" target="_blank">optout.aboutads.info</a> for opt-out options.</p>
+      </div>
+      <div class="legal-article">
+        <h3>Your Data Protection Rights</h3>
+        <p>European residents have the right to access, correct, update, restrict, or delete their information, as well as the right to data portability. Contact us to exercise these rights.</p>
+      </div>
+      <div class="legal-article">
+        <h3>Third-Party Websites</h3>
+        <p>We are not responsible for the privacy policies of linked websites. We encourage you to review the privacy policies of any third-party sites you visit.</p>
+      </div>
+      <div class="legal-article">
+        <h3>Changes</h3>
+        <p>We may update this Privacy Policy from time to time. Please check the "Last Updated" date at the top of this page for any changes.</p>
+      </div>
+      <div class="legal-article">
+        <h3>Contact Us</h3>
+        <p>For questions or to exercise your rights, contact us at <a href="mailto:support@ctofit.com">support@ctofit.com</a>.</p>
+        <p><strong style="color:var(--stone-text-head)">CTO Health LLC</strong><br>7385 State Rt 3, Unit #482<br>Westerville, OH 43082</p>
+      </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- DISCLAIMER -->
+    <section class="legal-section" id="disclaimer">
+      <div class="section-header">
+        <div class="section-eyebrow">Document 3 of 4</div>
+        <h2>Disclaimer</h2>
+        <span class="effective-date">Last Updated: January 23, 2025</span>
+      </div>
+      <div class="legal-article">
+        <p>This website is owned and operated by CTO Health LLC ("Company," "we," or "us"). This Disclaimer, together with our Terms &amp; Conditions of Use, Privacy Policy, and Terms of Purchase, governs your access to and use of www.ctofit.com, including any content, functionality, products, and services offered on or through the Website.</p>
+        <p>Please read this Disclaimer carefully before you start to use the Website. By using the Website or by clicking to accept or agree to the Terms &amp; Conditions of Use when this option is made available to you, you accept and agree to be bound by this Disclaimer.</p>
+      </div>
+      <div class="legal-article">
+        <h3>For Educational and Informational Purposes Only</h3>
+        <p>The content provided on this Website and through its resources (including videos, blog posts, courses, downloads, and products) is for general educational and informational purposes only. These resources are designed for general audiences and may not address specific personal, health, or professional needs.</p>
+        <p>The Company does not provide individualized advice unless explicitly stated within a written agreement.</p>
+      </div>
+      <div class="legal-article">
+        <h3>Not Medical Advice</h3>
+        <p>The fitness, nutrition, and health-related information provided on this Website and in the resources, including any of the Company's products, services, or programs, is not intended as medical advice. It is not a substitute for professional medical advice, diagnosis, or treatment.</p>
+        <p>If you have any pre-existing medical conditions, are pregnant, nursing, or taking medications, consult a qualified healthcare professional before using any advice or programs from this Website. Exercise, diet, and health-related matters vary from person to person, and results are not guaranteed.</p>
+        <p>By using the Website and its resources, you acknowledge that engaging in physical activity carries inherent risks. It is your responsibility to consult with a healthcare provider to determine the safety of such activities.</p>
+      </div>
+      <div class="legal-article">
+        <h3>No Guarantees of Results</h3>
+        <p>The Company does not guarantee results or outcomes based on the use of our Website, programs, or services. Results depend on numerous factors, including but not limited to individual genetics, environmental influences, personal commitment, and other factors outside the Company's control.</p>
+        <p>Prior results do not guarantee similar outcomes for others. You understand that success or failure is the result of individual effort and circumstances beyond the Company's knowledge or control.</p>
+      </div>
+      <div class="legal-article">
+        <h3>User's Personal Responsibility</h3>
+        <p>By using this Website and its resources, you accept full personal responsibility for your actions. You agree to use your judgment, conduct due diligence, and consult appropriate professionals before implementing any information or recommendations from this Website.</p>
+        <p>You acknowledge that any decision to act on information provided by this Website is made at your sole discretion and risk.</p>
+      </div>
+      <div class="legal-article">
+        <h3>Testimonials</h3>
+        <p>Testimonials on this Website reflect the real-life experiences and opinions of clients or customers. These experiences are personal to those individuals and may not represent typical results. Testimonials are not intended to guarantee that anyone will achieve similar outcomes.</p>
+        <p>Some testimonials may include incentives such as discounts or free products in exchange for honest feedback. Such instances will be disclosed near the testimonial.</p>
+      </div>
+      <div class="legal-article">
+        <h3>Affiliate Links and Reviews</h3>
+        <p>From time to time, this Website may include affiliate links, meaning we may earn a commission if you click on or make purchases through these links. Affiliate relationships do not influence the objectivity of our recommendations, and we strive to provide unbiased reviews regardless of potential commissions.</p>
+        <p>You recognize that it remains your responsibility to investigate whether affiliate products or services are right for you before making a purchase. The Company encourages you to conduct your own due diligence.</p>
+      </div>
+      <div class="legal-article">
+        <h3>No Professional-Client Relationship</h3>
+        <p>Your use of this Website, including the implementation of any suggestions set out in this Website and/or use of any resources, does not create a professional-client relationship between you and the Company or any of its professionals.</p>
+        <p>Communications via email, comments, or other interactive features of the Website do not constitute a professional-client relationship.</p>
+      </div>
+      <div class="legal-article">
+        <h3>General Liability</h3>
+        <p>The Company assumes no liability for any direct, indirect, incidental, or consequential damages arising from the use of the Website or any services purchased through it.</p>
+        <p>You agree to indemnify and hold harmless the Company, its employees, contractors, or contributors, from any claims, damages, or liabilities arising from your use of the Website and its resources.</p>
+      </div>
+      <div class="legal-article">
+        <h3>Governing Law</h3>
+        <p>This Disclaimer is governed by and construed in accordance with the laws of the State of Ohio. Any disputes arising under this Disclaimer shall be resolved exclusively in the appropriate courts located in Franklin County, Ohio.</p>
+      </div>
+      <div class="legal-article">
+        <h3>Modifications</h3>
+        <p>The Company reserves the right to modify or update this Disclaimer at any time without prior notice. Your continued use of the Website after modifications constitutes acceptance of the updated Disclaimer.</p>
+      </div>
+      <div class="legal-article">
+        <h3>Severability</h3>
+        <p>If any part of this Disclaimer is determined to be invalid or unenforceable, the remaining portions shall continue in full force and effect.</p>
+      </div>
+      <div class="legal-article">
+        <h3>Contact Us</h3>
+        <p>If you have any questions about this Disclaimer, please contact us:</p>
+        <p><strong style="color:var(--stone-text-head)">CTO Health LLC</strong><br>7385 State Rt 3, Unit #482<br>Westerville, OH 43082<br><a href="mailto:support@ctofit.com">support@ctofit.com</a></p>
+      </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- TERMS OF PURCHASE -->
+    <section class="legal-section" id="purchase">
+      <div class="section-header">
+        <div class="section-eyebrow">Document 4 of 4</div>
+        <h2>Terms of Purchase</h2>
+        <span class="effective-date">Last Updated: January 23, 2025</span>
+      </div>
+      <div class="legal-article">
+        <p>This Terms of Purchase policy (the "Agreement") is a legal agreement between you ("Customer" or "you") and CTO Health, LLC ("Company," "we," "us," or "our"). By purchasing our courses, programs, or services, you agree to be bound by this Agreement.</p>
+      </div>
+      <div class="legal-article">
+        <h3>1. Scope of Agreement</h3>
+        <p>This Agreement applies to all purchases made through www.ctofit.com (the "Website") or any other sales platform operated by the Company. By completing your purchase, you acknowledge and agree to these terms.</p>
+      </div>
+      <div class="legal-article">
+        <h3>2. Payment Terms</h3>
+        <h4>Payment Methods</h4>
+        <p>We accept credit/debit cards processed through Stripe via our website platform Podia.</p>
+        <h4>Full Payment</h4>
+        <p>Payment in full is required at the time of purchase unless otherwise specified.</p>
+        <h4>Installments (if applicable)</h4>
+        <p>If we offer installment plans, the terms and schedule will be detailed during the checkout process.</p>
+        <h4>Taxes</h4>
+        <p>All prices are exclusive of applicable taxes unless stated otherwise. You are responsible for paying any taxes associated with your purchase.</p>
+      </div>
+      <div class="legal-article">
+        <h3>3. Refund Policy</h3>
+        <h4>No Refunds</h4>
+        <p>All sales are final. Due to the digital nature of our courses and the immediate access to materials upon payment, we do not offer refunds under any circumstances.</p>
+        <h4>Exceptions</h4>
+        <p>Certain flagship programs may include a limited refund period (e.g., a 7-day money-back guarantee). If a refund window applies, it will be clearly stated on the specific product sales page and at checkout. Unless explicitly stated otherwise, all sales are final.</p>
+      </div>
+      <div class="legal-article">
+        <h3>4. Course Access</h3>
+        <h4>License</h4>
+        <p>Upon purchase, you are granted a non-transferable, non-exclusive license to access the course materials for personal use.</p>
+        <h4>Restrictions</h4>
+        <p>You may not share, reproduce, or distribute course content without our written permission.</p>
+        <h4>Lifetime Access</h4>
+        <p>"Lifetime Access" refers to the period during which the product is available and supported by the Company. The Company reserves the right to discontinue or modify the product at its sole discretion, at which point access may no longer be available.</p>
+      </div>
+      <div class="legal-article">
+        <h3>5. Intellectual Property</h3>
+        <p>All materials provided through our courses, including text, videos, graphics, and other content, are the intellectual property of CTO Health, LLC. Unauthorized use, copying, or distribution is prohibited.</p>
+      </div>
+      <div class="legal-article">
+        <h3>6. Disclaimers</h3>
+        <h4>No Guarantees</h4>
+        <p>While we are confident in the quality of our courses, results are not guaranteed. Individual results will vary.</p>
+        <h4>Health Disclaimer</h4>
+        <p>Our courses may include fitness, nutrition, or health-related content. Always consult a healthcare professional before starting any program.</p>
+      </div>
+      <div class="legal-article">
+        <h3>7. Limitation of Liability</h3>
+        <p>To the fullest extent permitted by law, the Company will not be liable for any direct, indirect, incidental, or consequential damages arising from your purchase or use of our courses.</p>
+      </div>
+      <div class="legal-article">
+        <h3>8. Governing Law</h3>
+        <p>This Agreement is governed by the laws of the State of Ohio, without regard to its conflict of laws principles.</p>
+      </div>
+      <div class="legal-article">
+        <h3>9. Amendments</h3>
+        <p>We reserve the right to update or modify this Agreement at any time. The updated terms will be posted on our Website, and your continued use of our courses constitutes your acceptance of the updated terms.</p>
+      </div>
+      <div class="legal-article">
+        <h3>10. Contact Information</h3>
+        <p>If you have questions or concerns regarding this Agreement, please contact us:</p>
+        <p><strong style="color:var(--stone-text-head)">CTO Health LLC</strong><br><a href="mailto:support@ctofit.com">support@ctofit.com</a><br>7385 State Rt 3, Unit #482<br>Westerville, OH 43082</p>
+      </div>
+      <div class="legal-article">
+        <h3>Acknowledgment</h3>
+        <p>By completing your purchase, you acknowledge that you have read, understood, and agreed to this Terms of Purchase policy.</p>
+      </div>
+    </section>
+
+    <!-- CONTACT CARD -->
+    <div class="contact-card" id="contact">
+      <div class="card-label">Questions or Concerns</div>
+      <h4>Contact CTO Health LLC</h4>
+      <p>
+        <a href="mailto:support@ctofit.com">support@ctofit.com</a><br>
+        7385 State Rt 3, Unit #482<br>
+        Westerville, OH 43082<br><br>
+        Governing Law: State of Ohio / Franklin County
+      </p>
+    </div>
+
+    <a href="#" class="back-top">↑ Back to Top</a>
+
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <a href="https://www.ctofit.com" class="footer-logo">CTO <span>FIT</span></a>
+      <span class="footer-tagline">Made to Overcome.</span>
+      <span class="footer-copy">© 2025 CTO Health LLC. All rights reserved.</span>
+    </div>
+  </footer>
+
+  <script>
+    const sections = ['terms','privacy','disclaimer','purchase'];
+    const tabs = {
+      terms: document.getElementById('tab-terms'),
+      privacy: document.getElementById('tab-privacy'),
+      disclaimer: document.getElementById('tab-disclaimer'),
+      purchase: document.getElementById('tab-purchase'),
+    };
+    function setActive(id) {
+      Object.values(tabs).forEach(t => t.classList.remove('active'));
+      if (tabs[id]) tabs[id].classList.add('active');
+    }
+    window.addEventListener('scroll', () => {
+      let current = 'terms';
+      sections.forEach(id => {
+        const el = document.getElementById(id);
+        if (el && window.scrollY >= el.offsetTop - 160) current = id;
+      });
+      setActive(current);
+    });
+  </script>
+
+</body>
+</html>
