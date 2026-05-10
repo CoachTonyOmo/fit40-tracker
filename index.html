@@ -165,9 +165,10 @@
     .feature-row{display:grid;grid-template-columns:1fr 1fr;min-height:520px;}
     .feature-row.reverse{direction:rtl;}
     .feature-row.reverse>*{direction:ltr;}
-    .feature-img{position:relative;overflow:hidden;min-height:420px;display:flex;align-items:center;justify-content:center;background-size:contain;background-position:center;background-repeat:no-repeat;}
+    .feature-img{position:relative;overflow:hidden;min-height:420px;display:flex;align-items:center;justify-content:center;}
     .feature-img.dark{background:var(--graphite);padding:40px;}
     .feature-img.light{background:var(--stone-bg);padding:40px;}
+    .feature-img img{width:100%;height:100%;object-fit:contain;max-height:500px;display:block;}
     .feature-img-placeholder{text-align:center;opacity:0.2;}
     .feature-img-placeholder svg{width:60px;height:60px;margin-bottom:8px;}
     .feature-img-placeholder p{font-family:'Oswald',sans-serif;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;}
@@ -381,6 +382,7 @@
 <div class="features">
   <div class="feature-row">
     <div class="feature-img dark">
+      <img id="feature1-img" src="" alt="FIT 40 Kickstart Challenge Tracker"/>
     </div>
     <div class="feature-content dark-bg">
       <div class="f-eyebrow green" id="f1-eyebrow"></div>
@@ -391,6 +393,7 @@
   </div>
   <div class="feature-row reverse">
     <div class="feature-img light">
+      <img id="feature2-img" src="" alt="FIT 40 Inner Circle Community"/>
     </div>
     <div class="feature-content light-bg">
       <div class="f-eyebrow muted" id="f2-eyebrow"></div>
@@ -546,11 +549,8 @@
   document.getElementById('f2-cta').textContent = F2_CTA_TEXT;
   document.getElementById('f2-cta').href = F2_CTA_LINK;
   document.getElementById('certs-img').src = CERTS_IMAGE;
-  // Wire feature images from Edit Zone
-  var f1img = document.querySelector('.feature-row:first-child .feature-img');
-  var f2img = document.querySelector('.feature-row.reverse .feature-img');
-  if(f1img) f1img.style.backgroundImage = "url('" + FEATURE1_IMAGE + "')";
-  if(f2img) f2img.style.backgroundImage = "url('" + FEATURE2_IMAGE + "')";
+  document.getElementById('feature1-img').src = FEATURE1_IMAGE;
+  document.getElementById('feature2-img').src = FEATURE2_IMAGE;
   document.getElementById('coach-quote-el').textContent = COACH_QUOTE;
   document.getElementById('coach-name-el').textContent = COACH_NAME;
   document.getElementById('coach-title-el').textContent = COACH_TITLE;
