@@ -239,15 +239,47 @@
     .coach-creds{display:flex;flex-wrap:wrap;gap:8px;}
     .cred-badge{font-size:11px;font-weight:600;letter-spacing:0.06em;padding:6px 14px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:2px;color:rgba(255,255,255,0.5);}
 
-    /* TESTIMONIALS */
-    .testimonials{background:var(--graphite);padding:100px 48px;}
-    .testimonials-inner{max-width:1100px;margin:0 auto;}
-    .testimonials-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:56px;}
-    .testi{background:var(--charcoal);padding:48px;border-top:2px solid var(--neon);}
-    .testi-quote{font-size:17px;color:rgba(255,255,255,0.65);line-height:1.85;margin-bottom:28px;}
-    .testi-quote::before{content:'\201C';color:var(--neon);font-size:36px;line-height:0;vertical-align:-12px;margin-right:6px;}
-    .testi-author{font-family:'Oswald',sans-serif;font-weight:600;font-size:18px;text-transform:uppercase;letter-spacing:0.08em;color:var(--white);}
-    .testi-meta{font-size:14px;color:rgba(255,255,255,0.3);margin-top:4px;}
+    /* FEATURED TESTIMONIAL */
+    .featured-testi{background:var(--black);padding:96px 48px;border-top:1px solid rgba(0,242,97,0.12);}
+    .featured-testi-inner{max-width:860px;margin:0 auto;}
+    .featured-stars{font-size:32px;margin-bottom:24px;letter-spacing:4px;}
+    .featured-quote{font-family:'Oswald',sans-serif;font-weight:500;font-size:28px;line-height:1.5;color:var(--white);margin-bottom:16px;font-style:normal;}
+    .featured-quote-cont{font-size:18px;color:rgba(255,255,255,0.65);line-height:1.8;margin-bottom:32px;}
+    .featured-quote-cont strong{color:var(--white);}
+    .featured-author{font-family:'Oswald',sans-serif;font-weight:700;font-size:24px;text-transform:uppercase;letter-spacing:0.08em;color:var(--neon);}
+
+    /* RECEIPTS */
+    .receipts{background:var(--graphite);padding:96px 48px;}
+    .receipts-inner{max-width:1000px;margin:0 auto;}
+
+    /* CAROUSEL */
+    .carousel{position:relative;margin-top:48px;overflow:hidden;}
+    .carousel-track{display:flex;transition:transform 0.45s cubic-bezier(0.25,0.46,0.45,0.94);will-change:transform;}
+    .carousel-slide{min-width:100%;display:flex;align-items:center;justify-content:center;padding:0 80px;}
+    .carousel-slide img{max-height:600px;max-width:100%;object-fit:contain;border-radius:12px;box-shadow:0 24px 64px rgba(0,0,0,0.5);}
+    .carousel-btn{position:absolute;top:50%;transform:translateY(-50%);background:rgba(0,0,0,0.6);border:1px solid rgba(255,255,255,0.15);color:var(--white);font-size:22px;width:52px;height:52px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s;z-index:10;}
+    .carousel-btn:hover{background:var(--neon);color:var(--black);border-color:var(--neon);}
+    .carousel-btn.prev{left:8px;}
+    .carousel-btn.next{right:8px;}
+    .carousel-dots{display:flex;justify-content:center;gap:10px;margin-top:32px;}
+    .carousel-dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,0.2);border:none;cursor:pointer;transition:all 0.2s;padding:0;}
+    .carousel-dot.active{background:var(--neon);transform:scale(1.3);}
+
+    @media(max-width:900px){
+      .featured-testi{padding:64px 24px;}
+      .featured-quote{font-size:22px;}
+      .featured-quote-cont{font-size:16px;}
+      .featured-author{font-size:20px;}
+      .receipts{padding:64px 20px;}
+      .carousel-slide{padding:0 48px;}
+      .carousel-slide img{max-height:480px;}
+    }
+    @media(max-width:480px){
+      .featured-quote{font-size:18px;}
+      .carousel-slide{padding:0 40px;}
+      .carousel-slide img{max-height:380px;}
+      .carousel-btn{width:40px;height:40px;font-size:18px;}
+    }
 
     /* FINAL CTA */
     .final-cta{background:var(--black);padding:120px 48px;text-align:center;position:relative;overflow:hidden;border-top:1px solid rgba(0,242,97,0.12);}
@@ -456,15 +488,38 @@
 </section>
 
 <section class="testimonials" id="community">
-  <div class="testimonials-inner">
-    <div class="section-eyebrow">What Members Say</div>
-    <h2 class="section-h2">Made to Overcome.</h2>
-    <div class="testimonials-grid">
-      <div class="testi"><p class="testi-quote" id="t1q"></p><div class="testi-author" id="t1n"></div><div class="testi-meta" id="t1m"></div></div>
-      <div class="testi"><p class="testi-quote" id="t2q"></p><div class="testi-author" id="t2n"></div><div class="testi-meta" id="t2m"></div></div>
-      <div class="testi"><p class="testi-quote" id="t3q"></p><div class="testi-author" id="t3n"></div><div class="testi-meta" id="t3m"></div></div>
+
+  <!-- Featured Testimonial — Bob -->
+  <div class="featured-testi">
+    <div class="featured-testi-inner">
+      <div class="featured-stars">⭐⭐⭐⭐⭐</div>
+      <blockquote class="featured-quote">"This program was exactly what I needed. I used to feel lost when it came to workouts and nutrition, constantly second-guessing if I was doing the right thing. Coach Tony took all the guesswork out of it and made everything simple and effective.</blockquote>
+      <p class="featured-quote-cont">Since starting, I've lost weight, built strength, and for the first time in my life, I have <strong>visible muscle at 48</strong>. The best part? <strong>Everyone keeps asking me how I did it!</strong> I feel stronger, healthier, and more confident than ever — without spending hours in the gym or following extreme diets."</p>
+      <div class="featured-author">— Bob, 48 | Dad of 2 Girls</div>
     </div>
   </div>
+
+  <!-- Receipts Carousel -->
+  <div class="receipts">
+    <div class="receipts-inner">
+      <div class="section-eyebrow">Real Results</div>
+      <h2 class="section-h2">Receipts &gt; Hype</h2>
+      <p class="section-sub">No staged photos. No paid testimonials. Just real people, real data, real life.</p>
+
+      <div class="carousel">
+        <div class="carousel-track" id="carousel-track">
+          <div class="carousel-slide"><img src="result-1.png" alt="Real member result"/></div>
+          <div class="carousel-slide"><img src="result-2.png" alt="Real member result"/></div>
+          <div class="carousel-slide"><img src="result-3.png" alt="Real member result"/></div>
+          <div class="carousel-slide"><img src="result-4.png" alt="Real member result"/></div>
+        </div>
+        <button class="carousel-btn prev" id="carousel-prev" aria-label="Previous">&#8592;</button>
+        <button class="carousel-btn next" id="carousel-next" aria-label="Next">&#8594;</button>
+        <div class="carousel-dots" id="carousel-dots"></div>
+      </div>
+    </div>
+  </div>
+
 </section>
 
 <section class="final-cta">
@@ -563,19 +618,58 @@
     cs.style.backgroundPosition = 'center';
     document.getElementById('coach-placeholder').style.display = 'none';
   }
-  document.getElementById('t1q').textContent = T1_QUOTE;
-  document.getElementById('t1n').textContent = T1_NAME;
-  document.getElementById('t1m').textContent = T1_META;
-  document.getElementById('t2q').textContent = T2_QUOTE;
-  document.getElementById('t2n').textContent = T2_NAME;
-  document.getElementById('t2m').textContent = T2_META;
-  document.getElementById('t3q').textContent = T3_QUOTE;
-  document.getElementById('t3n').textContent = T3_NAME;
-  document.getElementById('t3m').textContent = T3_META;
   document.getElementById('final-h2-el').innerHTML = FINAL_HEADLINE1 + '<br><span>' + FINAL_HEADLINE2 + '</span>';
   document.getElementById('final-sub-el').textContent = FINAL_SUBTEXT;
   document.getElementById('final-cta-btn').textContent = FINAL_CTA_TEXT;
   document.getElementById('final-cta-btn').href = FINAL_CTA_LINK;
+
+  // Carousel
+  (function(){
+    var track = document.getElementById('carousel-track');
+    var dotsContainer = document.getElementById('carousel-dots');
+    if(!track) return;
+    var slides = track.querySelectorAll('.carousel-slide');
+    var total = slides.length;
+    var current = 0;
+    var autoTimer;
+
+    // Build dots
+    slides.forEach(function(_, i){
+      var dot = document.createElement('button');
+      dot.className = 'carousel-dot' + (i===0?' active':'');
+      dot.setAttribute('aria-label', 'Slide ' + (i+1));
+      dot.addEventListener('click', function(){ goTo(i); resetAuto(); });
+      dotsContainer.appendChild(dot);
+    });
+
+    function goTo(n){
+      current = (n + total) % total;
+      track.style.transform = 'translateX(-' + (current * 100) + '%)';
+      dotsContainer.querySelectorAll('.carousel-dot').forEach(function(d,i){
+        d.classList.toggle('active', i===current);
+      });
+    }
+
+    document.getElementById('carousel-prev').addEventListener('click', function(){ goTo(current-1); resetAuto(); });
+    document.getElementById('carousel-next').addEventListener('click', function(){ goTo(current+1); resetAuto(); });
+
+    // Touch swipe
+    var startX = 0;
+    track.addEventListener('touchstart', function(e){ startX = e.touches[0].clientX; }, {passive:true});
+    track.addEventListener('touchend', function(e){
+      var diff = startX - e.changedTouches[0].clientX;
+      if(Math.abs(diff) > 40) goTo(diff > 0 ? current+1 : current-1);
+      resetAuto();
+    }, {passive:true});
+
+    // Auto advance — pauses on hover
+    function startAuto(){ autoTimer = setInterval(function(){ goTo(current+1); }, 5000); }
+    function resetAuto(){ clearInterval(autoTimer); startAuto(); }
+    track.parentElement.addEventListener('mouseenter', function(){ clearInterval(autoTimer); });
+    track.parentElement.addEventListener('mouseleave', startAuto);
+    startAuto();
+  })();
+
 </script>
 </body>
 </html>
