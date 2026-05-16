@@ -253,15 +253,18 @@
     .receipts-inner{max-width:1000px;margin:0 auto;}
 
     /* CAROUSEL */
-    .carousel{position:relative;margin-top:48px;overflow:hidden;}
-    .carousel-track{display:flex;transition:transform 0.45s cubic-bezier(0.25,0.46,0.45,0.94);will-change:transform;}
-    .carousel-slide{min-width:100%;display:flex;align-items:center;justify-content:center;padding:0 80px;}
-    .carousel-slide img{max-height:600px;max-width:100%;object-fit:contain;border-radius:12px;box-shadow:0 24px 64px rgba(0,0,0,0.5);}
-    .carousel-btn{position:absolute;top:50%;transform:translateY(-50%);background:rgba(0,0,0,0.6);border:1px solid rgba(255,255,255,0.15);color:var(--white);font-size:22px;width:52px;height:52px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s;z-index:10;}
+    .carousel{position:relative;margin-top:48px;padding:0 0 48px;}
+    .carousel-viewport{overflow:hidden;width:100%;}
+    .carousel-track{display:flex;align-items:center;gap:24px;transition:transform 0.45s cubic-bezier(0.25,0.46,0.45,0.94);will-change:transform;padding:20px 0;}
+    .carousel-slide{flex:0 0 60%;max-width:600px;transition:opacity 0.4s ease, transform 0.4s ease;opacity:0.35;transform:scale(0.9);cursor:pointer;}
+    .carousel-slide.active{opacity:1;transform:scale(1);}
+    .carousel-slide img{width:100%;height:auto;object-fit:contain;border-radius:16px;box-shadow:0 24px 64px rgba(0,0,0,0.6);display:block;}
+    .carousel-slide.active img{box-shadow:0 32px 80px rgba(0,0,0,0.8),0 0 0 1px rgba(0,242,97,0.15);}
+    .carousel-btn{position:absolute;top:45%;transform:translateY(-50%);background:rgba(0,0,0,0.7);border:1px solid rgba(255,255,255,0.15);color:var(--white);font-size:22px;width:52px;height:52px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s;z-index:10;}
     .carousel-btn:hover{background:var(--neon);color:var(--black);border-color:var(--neon);}
-    .carousel-btn.prev{left:8px;}
-    .carousel-btn.next{right:8px;}
-    .carousel-dots{display:flex;justify-content:center;gap:10px;margin-top:32px;}
+    .carousel-btn.prev{left:0;}
+    .carousel-btn.next{right:0;}
+    .carousel-dots{display:flex;justify-content:center;gap:10px;margin-top:16px;}
     .carousel-dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,0.2);border:none;cursor:pointer;transition:all 0.2s;padding:0;}
     .carousel-dot.active{background:var(--neon);transform:scale(1.3);}
 
@@ -271,13 +274,11 @@
       .featured-quote-cont{font-size:16px;}
       .featured-author{font-size:20px;}
       .receipts{padding:64px 20px;}
-      .carousel-slide{padding:0 48px;}
-      .carousel-slide img{max-height:480px;}
+      .carousel-slide{flex:0 0 75%;}
     }
     @media(max-width:480px){
       .featured-quote{font-size:18px;}
-      .carousel-slide{padding:0 40px;}
-      .carousel-slide img{max-height:380px;}
+      .carousel-slide{flex:0 0 85%;}
       .carousel-btn{width:40px;height:40px;font-size:18px;}
     }
 
@@ -507,11 +508,13 @@
       <p class="section-sub">No staged photos. No paid testimonials. Just real people, real data, real life.</p>
 
       <div class="carousel">
-        <div class="carousel-track" id="carousel-track">
-          <div class="carousel-slide"><img src="result-1.png" alt="Real member result"/></div>
-          <div class="carousel-slide"><img src="result-2.png" alt="Real member result"/></div>
-          <div class="carousel-slide"><img src="result-3.png" alt="Real member result"/></div>
-          <div class="carousel-slide"><img src="result-4.png" alt="Real member result"/></div>
+        <div class="carousel-viewport">
+          <div class="carousel-track" id="carousel-track">
+            <div class="carousel-slide"><img src="result-1.png" alt="Real member result"/></div>
+            <div class="carousel-slide"><img src="result-2.png" alt="Real member result"/></div>
+            <div class="carousel-slide"><img src="result-3.png" alt="Real member result"/></div>
+            <div class="carousel-slide"><img src="result-4.png" alt="Real member result"/></div>
+          </div>
         </div>
         <button class="carousel-btn prev" id="carousel-prev" aria-label="Previous">&#8592;</button>
         <button class="carousel-btn next" id="carousel-next" aria-label="Next">&#8594;</button>
@@ -623,12 +626,12 @@
   document.getElementById('final-cta-btn').textContent = FINAL_CTA_TEXT;
   document.getElementById('final-cta-btn').href = FINAL_CTA_LINK;
 
-  // Carousel
+  // Carousel — center focus with dimmed sides
   (function(){
     var track = document.getElementById('carousel-track');
     var dotsContainer = document.getElementById('carousel-dots');
     if(!track) return;
-    var slides = track.querySelectorAll('.carousel-slide');
+    var slides = Array.from(track.querySelectorAll('.carousel-slide'));
     var total = slides.length;
     var current = 0;
     var autoTimer;
@@ -642,24 +645,40 @@
       dotsContainer.appendChild(dot);
     });
 
+    function update(){
+      var slideWidth = slides[0].offsetWidth + 24; // width + gap
+      var viewportWidth = track.parentElement.offsetWidth;
+      var offset = (viewportWidth / 2) - (slideWidth / 2) - (current * slideWidth);
+      track.style.transform = 'translateX(' + offset + 'px)';
+
+      slides.forEach(function(slide, i){
+        slide.classList.toggle('active', i === current);
+      });
+
+      dotsContainer.querySelectorAll('.carousel-dot').forEach(function(d,i){
+        d.classList.toggle('active', i === current);
+      });
+    }
+
     function goTo(n){
       current = (n + total) % total;
-      track.style.transform = 'translateX(-' + (current * 100) + '%)';
-      dotsContainer.querySelectorAll('.carousel-dot').forEach(function(d,i){
-        d.classList.toggle('active', i===current);
-      });
+      update();
     }
 
     document.getElementById('carousel-prev').addEventListener('click', function(){ goTo(current-1); resetAuto(); });
     document.getElementById('carousel-next').addEventListener('click', function(){ goTo(current+1); resetAuto(); });
+
+    // Click side slides to navigate
+    slides.forEach(function(slide, i){
+      slide.addEventListener('click', function(){ if(i !== current){ goTo(i); resetAuto(); } });
+    });
 
     // Touch swipe
     var startX = 0;
     track.addEventListener('touchstart', function(e){ startX = e.touches[0].clientX; }, {passive:true});
     track.addEventListener('touchend', function(e){
       var diff = startX - e.changedTouches[0].clientX;
-      if(Math.abs(diff) > 40) goTo(diff > 0 ? current+1 : current-1);
-      resetAuto();
+      if(Math.abs(diff) > 40){ goTo(diff > 0 ? current+1 : current-1); resetAuto(); }
     }, {passive:true});
 
     // Auto advance — pauses on hover
@@ -667,6 +686,10 @@
     function resetAuto(){ clearInterval(autoTimer); startAuto(); }
     track.parentElement.addEventListener('mouseenter', function(){ clearInterval(autoTimer); });
     track.parentElement.addEventListener('mouseleave', startAuto);
+
+    // Init
+    window.addEventListener('resize', update);
+    update();
     startAuto();
   })();
 
