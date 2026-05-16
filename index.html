@@ -249,15 +249,16 @@
     .featured-author{font-family:'Oswald',sans-serif;font-weight:700;font-size:24px;text-transform:uppercase;letter-spacing:0.08em;color:var(--neon);}
 
     /* RECEIPTS */
-    .receipts{background:var(--graphite);padding:96px 72px;}
-    @media(max-width:900px){.receipts{padding:64px 40px;}}
+    .receipts{background:var(--graphite);padding:96px 0;}
+    .receipts-inner{max-width:100%;padding:0 72px;}
+    @media(max-width:900px){.receipts{padding:64px 0;}.receipts-inner{padding:0 20px;}}
     .receipts-inner{max-width:1000px;margin:0 auto;}
 
     /* CAROUSEL */
     .carousel{position:relative;margin-top:48px;padding-bottom:48px;}
     .carousel-track-wrap{overflow:hidden;width:100%;}
     .carousel-track{display:flex;align-items:center;gap:20px;transition:transform 0.45s cubic-bezier(0.25,0.46,0.45,0.94);}
-    .carousel-slide{flex:0 0 calc(60% - 40px);transition:opacity 0.4s,transform 0.4s;opacity:0.3;transform:scale(0.88);cursor:pointer;pointer-events:auto;}
+    .carousel-slide{flex:0 0 50%;transition:opacity 0.4s,transform 0.4s;opacity:0.3;transform:scale(0.88);cursor:pointer;pointer-events:auto;}
     .carousel-slide.active{opacity:1;transform:scale(1);pointer-events:none;}
     .carousel-slide img{width:100%;border-radius:14px;box-shadow:0 16px 48px rgba(0,0,0,0.5);display:block;}
     .carousel-slide.active img{box-shadow:0 24px 72px rgba(0,0,0,0.8),0 0 0 2px rgba(0,242,97,0.25);}
