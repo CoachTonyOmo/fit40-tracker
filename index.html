@@ -250,10 +250,10 @@
 
     /* RECEIPTS */
     .receipts{background:var(--graphite);padding:96px 0;}
-    .receipts-inner{max-width:100%;padding:0 48px;}
+    .receipts-inner{max-width:860px;margin:0 auto;padding:0 48px;text-align:center;}
 
     /* CAROUSEL */
-    .carousel-wrap{position:relative;padding-bottom:40px;}
+    .carousel-wrap{position:relative;padding-bottom:40px;margin-top:48px;}
     .carousel-window{width:100%;padding:16px 12% 16px;box-sizing:border-box;}
     .carousel-track{display:flex;gap:12px;transition:transform 0.4s cubic-bezier(.25,.46,.45,.94);}
     .carousel-slide{flex:0 0 70%;border-radius:12px;transition:opacity 0.4s,transform 0.4s;opacity:0.3;transform:scale(0.92);cursor:pointer;}
@@ -521,20 +521,20 @@
       <div class="section-eyebrow">Real Results</div>
       <h2 class="section-h2">Receipts &gt; Hype</h2>
       <p class="section-sub">No staged photos. No paid testimonials. Just real people, real data, real life.</p>
+    </div>
 
-      <div class="carousel-wrap" id="cw">
-        <div class="carousel-window" id="carousel-win">
-          <div class="carousel-track" id="carousel-track">
-            <div class="carousel-slide"><img src="result-1.png" alt="Real member result"/></div>
-            <div class="carousel-slide"><img src="result-2.png" alt="Real member result"/></div>
-            <div class="carousel-slide"><img src="result-3.png" alt="Real member result"/></div>
-            <div class="carousel-slide"><img src="result-4.png" alt="Real member result"/></div>
-          </div>
+    <div class="carousel-wrap" id="cw">
+      <div class="carousel-window">
+        <div class="carousel-track" id="carousel-track">
+          <div class="carousel-slide"><img src="result-1.png" alt="Real member result"/></div>
+          <div class="carousel-slide"><img src="result-2.png" alt="Real member result"/></div>
+          <div class="carousel-slide"><img src="result-3.png" alt="Real member result"/></div>
+          <div class="carousel-slide"><img src="result-4.png" alt="Real member result"/></div>
         </div>
-        <button class="carousel-btn prev" id="carousel-prev" aria-label="Previous">&#8592;</button>
-        <button class="carousel-btn next" id="carousel-next" aria-label="Next">&#8594;</button>
-        <div class="carousel-dots" id="carousel-dots"></div>
       </div>
+      <button class="carousel-btn prev" id="carousel-prev" aria-label="Previous">&#8592;</button>
+      <button class="carousel-btn next" id="carousel-next" aria-label="Next">&#8594;</button>
+      <div class="carousel-dots" id="carousel-dots"></div>
     </div>
   </div>
 
