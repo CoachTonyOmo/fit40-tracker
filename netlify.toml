@@ -2,3 +2,8 @@
   from = "/lessons/*"
   to = "/lessons/:splat/index.html"
   status = 200
+
+[[redirects]]
+  from = "/tools/*"
+  to = "/tools/:splat/index.html"
+  status = 200
