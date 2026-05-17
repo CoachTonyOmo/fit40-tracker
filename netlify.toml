@@ -1,3 +1,6 @@
+[build]
+  publish = "."
+
 [[redirects]]
   from = "/lessons/*"
   to = "/lessons/:splat/index.html"
