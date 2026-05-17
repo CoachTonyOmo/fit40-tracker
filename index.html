@@ -256,7 +256,7 @@
     .carousel-wrap{position:relative;padding-bottom:40px;margin-top:48px;max-width:1200px;margin-left:auto;margin-right:auto;}
     .carousel-window{width:100%;box-sizing:border-box;overflow:hidden;}
     .carousel-track{display:flex;gap:12px;transition:transform 0.4s cubic-bezier(.25,.46,.45,.94);}
-    .carousel-slide{flex:0 0 55%;max-width:580px;border-radius:12px;transition:opacity 0.4s,transform 0.4s;opacity:0.3;transform:scale(0.92);cursor:pointer;}
+    .carousel-slide{flex:0 0 520px;width:520px;border-radius:12px;transition:opacity 0.4s,transform 0.4s;opacity:0.3;transform:scale(0.92);cursor:pointer;}
     .carousel-slide.active{opacity:1;transform:scale(1);cursor:default;outline:2px solid rgba(0,242,97,0.4);}
     .carousel-slide img{width:100%;display:block;border-radius:12px;box-shadow:0 16px 48px rgba(0,0,0,0.5);}
     .carousel-btn{position:absolute;top:50%;transform:translateY(-50%);background:rgba(0,0,0,0.8);border:1px solid rgba(255,255,255,0.2);color:var(--white);width:44px;height:44px;border-radius:50%;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:20;transition:all 0.2s;}
@@ -275,12 +275,11 @@
       .receipts{padding:64px 0;}
       .receipts-inner{padding:0 20px;}
       .carousel-window{padding:16px 8% 16px;}
-      .carousel-slide{flex:0 0 80%;}
+      .carousel-slide{flex:0 0 75vw;width:75vw;}
     }
     @media(max-width:480px){
       .featured-quote{font-size:18px;}
-      .carousel-window{padding:16px 5% 16px;}
-      .carousel-slide{flex:0 0 88%;}
+      .carousel-slide{flex:0 0 85vw;width:85vw;}
     }
 
     @media(max-width:900px){
