@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mindset Detector | FIT 40 Inner Circle</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Sora:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --neon:    #00F261;
+  --volt:    #E4F222;
+  --red:     #FF4444;
+  --magenta: #FF2FD1;
+  --black:   #000;
+  --charcoal:#111;
+  --graphite:#1C1C1C;
+  --surface: #222;
+  --white:   #fff;
+  --text:    rgba(255,255,255,0.75);
+  --dim:     rgba(255,255,255,0.4);
+  --border:  rgba(255,255,255,0.08);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--black);color:var(--white);font-family:'Sora',sans-serif;font-size:16px;line-height:1.65;min-height:100vh;overflow-x:hidden;}
+::selection{background:rgba(0,242,97,0.25);}
+
+/* ── HEADER ── */
+#site-header{position:fixed;top:0;left:0;right:0;height:52px;background:rgba(0,0,0,0.96);border-bottom:1px solid var(--border);backdrop-filter:blur(12px);display:flex;align-items:center;justify-content:space-between;padding:0 32px;z-index:100;}
+.hdr-brand{font-family:'Oswald',sans-serif;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:0.14em;}
+.hdr-brand span{color:var(--neon);background:rgba(0,242,97,0.1);border:1px solid rgba(0,242,97,0.2);border-radius:2px;padding:2px 7px;font-size:11px;margin-right:6px;}
+.hdr-tool{font-family:'Sora',sans-serif;font-size:11px;color:var(--dim);letter-spacing:0.06em;}
+
+/* ── APP WRAP ── */
+#app{min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:88px 24px 80px;}
+
+/* ── SCREENS ── */
+.screen{max-width:660px;width:100%;}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(22px);}to{opacity:1;transform:translateY(0);}}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.35;}}
+@keyframes shimmer{0%{background-position:-200% 0;}100%{background-position:200% 0;}}
+.anim{animation:fadeUp 0.5s ease both;}
+
+/* ══════════════════════
+   INTRO SCREEN
+══════════════════════ */
+#screen-intro{display:flex;flex-direction:column;align-items:center;text-align:center;gap:24px;}
+.intro-badge{display:inline-flex;align-items:center;gap:8px;font-family:'Sora',sans-serif;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.2em;color:var(--dim);}
+.intro-badge::before,.intro-badge::after{content:'';height:1px;width:28px;background:var(--border);}
+.intro-title{font-family:'Oswald',sans-serif;font-weight:700;font-size:clamp(42px,8vw,72px);text-transform:uppercase;letter-spacing:0.01em;line-height:0.9;}
+.intro-title em{display:block;color:var(--neon);font-style:normal;text-shadow:0 0 40px rgba(0,242,97,0.4);}
+.intro-sub{font-size:17px;line-height:1.7;color:var(--text);max-width:500px;}
+.intro-pills{display:flex;align-items:center;justify-content:center;gap:20px;flex-wrap:wrap;}
+.intro-pill{display:flex;align-items:center;gap:7px;font-size:13px;color:var(--dim);}
+.pill-dot{width:4px;height:4px;border-radius:50%;background:var(--neon);flex-shrink:0;}
+.btn-start{display:inline-flex;align-items:center;gap:10px;background:var(--neon);color:#000;font-family:'Oswald',sans-serif;font-size:15px;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;height:56px;padding:0 44px;border:none;border-radius:3px;cursor:pointer;transition:opacity 0.2s,transform 0.15s;margin-top:8px;}
+.btn-start:hover{opacity:0.88;transform:translateY(-2px);}
+.intro-note{font-size:12px;color:var(--dim);}
+
+/* ══════════════════════
+   QUIZ SCREEN
+══════════════════════ */
+#screen-quiz{display:none;}
+.prog-wrap{margin-bottom:32px;}
+.prog-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
+.prog-label{font-family:'Oswald',sans-serif;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.14em;color:var(--dim);}
+.prog-count{font-family:'Sora',sans-serif;font-size:12px;color:var(--neon);}
+.prog-bar{height:3px;background:var(--border);border-radius:2px;overflow:hidden;}
+.prog-fill{height:100%;background:var(--neon);border-radius:2px;width:0%;transition:width 0.4s cubic-bezier(0.22,1,0.36,1);box-shadow:0 0 8px var(--neon);}
+.q-card{background:var(--graphite);border:1px solid var(--border);border-top:2px solid var(--neon);padding:36px 36px 32px;animation:fadeUp 0.4s ease both;}
+.q-num{font-family:'Oswald',sans-serif;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.18em;color:var(--neon);background:rgba(0,242,97,0.1);border:1px solid rgba(0,242,97,0.2);border-radius:2px;padding:3px 8px;display:inline-block;margin-bottom:16px;}
+.q-text{font-family:'Oswald',sans-serif;font-weight:600;font-size:clamp(19px,3vw,25px);text-transform:uppercase;letter-spacing:0.02em;line-height:1.15;color:var(--white);margin-bottom:10px;}
+.q-context{font-size:14px;color:var(--dim);margin-bottom:24px;font-style:italic;line-height:1.6;}
+.options{display:flex;flex-direction:column;gap:10px;}
+.option{display:flex;align-items:flex-start;gap:14px;background:var(--surface);border:1px solid var(--border);padding:15px 18px;cursor:pointer;transition:all 0.18s;border-radius:2px;}
+.option:hover{border-color:rgba(0,242,97,0.4);background:rgba(0,242,97,0.04);}
+.option.selected{border-color:var(--neon);background:rgba(0,242,97,0.08);box-shadow:0 0 0 1px var(--neon);}
+.opt-letter{width:26px;height:26px;border-radius:50%;border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;font-family:'Oswald',sans-serif;font-size:12px;font-weight:700;color:var(--dim);flex-shrink:0;margin-top:1px;transition:all 0.18s;}
+.option.selected .opt-letter{background:var(--neon);border-color:var(--neon);color:#000;}
+.opt-text{font-size:15px;color:var(--text);line-height:1.5;}
+.option.selected .opt-text{color:var(--white);}
+.q-nav{display:flex;align-items:center;justify-content:space-between;margin-top:24px;}
+.btn-back{font-family:'Sora',sans-serif;font-size:13px;color:var(--dim);background:none;border:1px solid var(--border);border-radius:2px;padding:10px 20px;cursor:pointer;transition:all 0.18s;}
+.btn-back:hover{border-color:rgba(255,255,255,0.25);color:var(--white);}
+.btn-next{font-family:'Oswald',sans-serif;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;background:var(--neon);color:#000;border:none;border-radius:2px;padding:12px 28px;cursor:pointer;transition:opacity 0.2s;opacity:0.3;pointer-events:none;}
+.btn-next.on{opacity:1;pointer-events:all;}
+.btn-next.on:hover{opacity:0.85;}
+
+/* ══════════════════════
+   RESULT SCREEN
+══════════════════════ */
+#screen-result{display:none;}
+.res-header{text-align:center;padding:48px 0 32px;animation:fadeUp 0.5s ease both;}
+.res-eyebrow{font-family:'Sora',sans-serif;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.22em;color:var(--dim);margin-bottom:14px;display:block;}
+.res-type-pill{font-family:'Oswald',sans-serif;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.18em;color:var(--neon);background:rgba(0,242,97,0.1);border:1px solid rgba(0,242,97,0.2);border-radius:2px;padding:4px 12px;display:inline-block;margin-bottom:14px;}
+.res-name{font-family:'Oswald',sans-serif;font-weight:700;font-size:clamp(44px,9vw,84px);text-transform:uppercase;letter-spacing:0.01em;line-height:0.88;color:var(--white);margin-bottom:0;}
+.res-name em{color:var(--neon);font-style:normal;display:block;}
+
+/* Result detail card */
+.res-card{background:var(--graphite);border:1px solid var(--border);border-top:2px solid var(--neon);padding:32px 36px;margin-bottom:20px;animation:fadeUp 0.5s 0.1s ease both;position:relative;overflow:hidden;}
+.res-card::after{content:'';position:absolute;top:0;right:0;width:180px;height:180px;background:radial-gradient(circle at 100% 0%,rgba(0,242,97,0.07) 0%,transparent 60%);pointer-events:none;}
+.res-diag-label{font-family:'Oswald',sans-serif;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.16em;color:var(--dim);margin-bottom:8px;display:block;}
+.res-diag{font-size:16px;line-height:1.7;color:rgba(255,255,255,0.82);margin-bottom:24px;font-style:italic;}
+.res-rf-label{font-family:'Oswald',sans-serif;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.16em;color:var(--neon);margin-bottom:8px;display:block;}
+.res-rf{background:rgba(0,242,97,0.06);border-left:3px solid var(--neon);padding:14px 20px;}
+.res-rf p{font-family:'Oswald',sans-serif;font-size:clamp(15px,2.2vw,20px);font-weight:600;text-transform:uppercase;letter-spacing:0.04em;color:var(--neon);line-height:1.3;}
+
+/* ══════════════════════
+   BADGE SECTION
+══════════════════════ */
+.badge-section{background:var(--charcoal);border:1px solid var(--border);border-top:1px solid rgba(0,242,97,0.2);padding:36px 36px 32px;margin-bottom:20px;animation:fadeUp 0.5s 0.2s ease both;}
+.badge-section-label{font-family:'Oswald',sans-serif;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.2em;color:var(--neon);margin-bottom:6px;display:flex;align-items:center;gap:8px;}
+.badge-section-label::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--neon);box-shadow:0 0 8px var(--neon);animation:pulse 2s ease-in-out infinite;}
+.badge-section-title{font-family:'Oswald',sans-serif;font-size:22px;font-weight:700;text-transform:uppercase;letter-spacing:0.04em;color:var(--white);margin-bottom:24px;}
+
+/* Name input */
+.name-input-wrap{margin-bottom:28px;}
+.name-label{font-family:'Sora',sans-serif;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.12em;color:var(--dim);margin-bottom:8px;display:block;}
+.name-input{width:100%;background:var(--surface);border:1px solid var(--border);border-radius:2px;padding:14px 18px;font-family:'Oswald',sans-serif;font-size:20px;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;color:var(--white);outline:none;transition:border-color 0.2s;}
+.name-input::placeholder{color:rgba(255,255,255,0.2);}
+.name-input:focus{border-color:var(--neon);box-shadow:0 0 0 1px rgba(0,242,97,0.3);}
+
+/* Badge canvas wrapper */
+.badge-preview-wrap{display:flex;justify-content:center;margin-bottom:28px;}
+#badge-canvas{border-radius:6px;max-width:100%;display:block;box-shadow:0 8px 32px rgba(0,0,0,0.4);}
+
+/* Three action buttons */
+.action-btns{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:12px;}
+.act-btn{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;padding:16px 10px;border-radius:3px;cursor:pointer;transition:all 0.2s;border:none;font-family:'Oswald',sans-serif;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;text-decoration:none;}
+.act-btn .btn-icon{font-size:22px;line-height:1;}
+.act-btn.primary{background:var(--neon);color:#000;}
+.act-btn.primary:hover{opacity:0.88;transform:translateY(-1px);}
+.act-btn.secondary{background:var(--surface);color:var(--white);border:1px solid var(--border);}
+.act-btn.secondary:hover{border-color:var(--neon);color:var(--neon);}
+.act-btn.tertiary{background:var(--surface);color:var(--white);border:1px solid var(--border);}
+.act-btn.tertiary:hover{border-color:rgba(255,255,255,0.3);color:var(--white);}
+.act-btn.copied{background:rgba(0,242,97,0.15);color:var(--neon);border-color:var(--neon);}
+.act-btn-note{font-size:11px;text-align:center;color:var(--dim);line-height:1.5;}
+
+.btn-retake{display:flex;align-items:center;justify-content:center;width:100%;background:transparent;color:var(--dim);font-family:'Sora',sans-serif;font-size:13px;height:44px;border:1px solid var(--border);border-radius:3px;cursor:pointer;transition:all 0.2s;margin-top:12px;}
+.btn-retake:hover{border-color:rgba(255,255,255,0.25);color:var(--white);}
+
+/* ── Share section ── */
+.badge-section{display:flex;flex-direction:column;gap:12px;margin-bottom:24px;}
+.result-prompt{background:var(--graphite);border:1px solid rgba(0,242,97,0.2);border-left:3px solid var(--neon);padding:20px 24px;}
+.result-prompt-label{font-family:'Oswald',sans-serif;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.18em;color:var(--neon);margin-bottom:8px;display:flex;align-items:center;gap:7px;}
+.result-prompt-label::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--neon);box-shadow:0 0 8px var(--neon);animation:pulse 2s ease-in-out infinite;}
+.result-prompt p{font-size:15px;color:rgba(255,255,255,0.8);font-style:italic;line-height:1.6;}
+.btn-community{display:flex;align-items:center;justify-content:center;gap:10px;background:var(--neon);color:#000;font-family:'Oswald',sans-serif;font-size:14px;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;height:56px;border:none;border-radius:3px;cursor:pointer;transition:opacity 0.2s;text-decoration:none;}
+.btn-community:hover{opacity:0.85;}
+.btn-retake{display:flex;align-items:center;justify-content:center;background:transparent;color:var(--dim);font-family:'Sora',sans-serif;font-size:13px;height:44px;border:1px solid var(--border);border-radius:3px;cursor:pointer;transition:all 0.2s;letter-spacing:0.04em;}
+.btn-retake:hover{border-color:rgba(255,255,255,0.25);color:var(--white);}
+@media(max-width:520px){
+  #site-header{padding:0 16px;}
+  .hdr-tool{display:none;}
+  #app{padding:80px 16px 64px;}
+  .q-card,.res-card,.badge-section{padding:24px 18px;}
+  .action-btns{grid-template-columns:1fr;}
+  .act-btn{flex-direction:row;justify-content:center;gap:10px;padding:14px;}
+}
+</style>
+</head>
+<body>
+
+<header id="site-header">
+  <div class="hdr-brand"><span>CTO</span> FIT 40 Inner Circle</div>
+  <div class="hdr-tool">Mindset Detector</div>
+</header>
+
+<div id="app">
+
+  <!-- ══ INTRO ══ -->
+  <div id="screen-intro" class="screen anim">
+    <div class="intro-badge">FIT 40 Inner Circle · Free Tool</div>
+    <h1 class="intro-title">MINDSET<em>DETECTOR</em></h1>
+    <p class="intro-sub">10 questions. 2 minutes. Discover which fixed mindset pattern is quietly holding back your progress and get your personalised growth reframe.</p>
+    <div class="intro-pills">
+      <div class="intro-pill"><div class="pill-dot"></div>10 Questions</div>
+      <div class="intro-pill"><div class="pill-dot"></div>5 Result Types</div>
+      <div class="intro-pill"><div class="pill-dot"></div>Your Growth Reframe</div>
+    </div>
+    <button class="btn-start" onclick="startQuiz()">Start the Detector →</button>
+    <p class="intro-note">Based on Carol Dweck's mindset research · Coach Tony O · CTO FIT</p>
+  </div>
+
+  <!-- ══ QUIZ ══ -->
+  <div id="screen-quiz" class="screen">
+    <div class="prog-wrap">
+      <div class="prog-top">
+        <span class="prog-label">Mindset Detector</span>
+        <span class="prog-count" id="prog-count">1 / 10</span>
+      </div>
+      <div class="prog-bar"><div class="prog-fill" id="prog-fill"></div></div>
+    </div>
+    <div class="q-card" id="q-card"></div>
+    <div class="q-nav">
+      <button class="btn-back" id="btn-back" onclick="prevQ()">← Back</button>
+      <button class="btn-next" id="btn-next" onclick="nextQ()">Next →</button>
+    </div>
+  </div>
+
+  <!-- ══ RESULT ══ -->
+  <div id="screen-result" class="screen">
+
+    <div class="res-header">
+      <span class="res-eyebrow">Your Mindset Audit is Complete</span>
+      <div class="res-type-pill" id="r-pill"></div>
+      <h2 class="res-name" id="r-name"></h2>
+    </div>
+
+    <div class="res-card">
+      <span class="res-diag-label">Coach Tony O Says</span>
+      <p class="res-diag" id="r-diag"></p>
+      <span class="res-rf-label">Your Growth Reframe</span>
+      <div class="res-rf"><p id="r-rf"></p></div>
+    </div>
+
+    <!-- SHARE SECTION -->
+    <div class="badge-section">
+      <div class="result-prompt" style="margin-bottom:16px;">
+        <div class="result-prompt-label">
+          Post Your Result
+          <button id="copy-prompt-btn" onclick="copyPrompt()" style="margin-left:auto;display:flex;align-items:center;gap:7px;background:rgba(0,242,97,0.1);border:1px solid rgba(0,242,97,0.3);border-radius:2px;color:var(--neon);font-family:'Oswald',sans-serif;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.12em;padding:6px 14px;cursor:pointer;transition:all 0.2s;flex-shrink:0;">
+            <span id="copy-prompt-icon">📋</span><span id="copy-prompt-text">Copy</span>
+          </button>
+        </div>
+        <p id="r-prompt"></p>
+      </div>
+
+      <a class="btn-community" href="https://www.skool.com/fit-40-inner-circle-1807" target="_blank">
+        Post Your Result in the Community →
+      </a>
+
+      <button class="btn-retake" onclick="retake()">Retake the Detector</button>
+    </div>
+
+  </div>
+</div>
+
+<script>
+/* ══════════════════════════════════════
+   DATA
+══════════════════════════════════════ */
+const QUESTIONS = [
+  { type:"avoider", text:"A new training method could get you better results, but it's outside your comfort zone.", context:"Your gut reaction:", options:[
+    {l:"A", t:"I'd skip it. If my current approach isn't working, I'll figure something else out.", s:2},
+    {l:"B", t:"I'd research it first, then ease in slowly.", s:1},
+    {l:"C", t:"I'd jump in. Discomfort usually means growth.", s:0}
+  ]},
+  { type:"avoider", text:"Your schedule is wide open this weekend. No excuses, no obstacles.", context:"But you still haven't started the program. Why?", options:[
+    {l:"A", t:"Honestly, I don't want to start and find out I can't stick with it.", s:2},
+    {l:"B", t:"I'm waiting until I have a clearer plan.", s:1},
+    {l:"C", t:"I'd just start. Perfect conditions don't exist.", s:0}
+  ]},
+  { type:"quitter", text:"Week 3 of your program. Work explodes. Sleep is bad. You miss three days.", context:"What happens next?", options:[
+    {l:"A", t:"That's it. I'll restart next month when things calm down.", s:2},
+    {l:"B", t:"I tell myself I'll get back on track, but it usually takes another week.", s:1},
+    {l:"C", t:"I adjust and get back in the very next day. Setbacks are part of it.", s:0}
+  ]},
+  { type:"quitter", text:"You hit a plateau. Three weeks, no visible progress. The scale hasn't moved.", context:"Your response:", options:[
+    {l:"A", t:"I start to wonder if any of this is even working for me.", s:2},
+    {l:"B", t:"I get frustrated but push through, usually.", s:1},
+    {l:"C", t:"I analyse what needs to change and adjust.", s:0}
+  ]},
+  { type:"benchwarmer", text:"Someone tells you that you're putting in good effort at the gym.", context:"Your internal reaction:", options:[
+    {l:"A", t:"If I have to work this hard, I probably just don't have the genetics for it.", s:2},
+    {l:"B", t:"Nice to hear, but I'm not sure effort alone is enough for me.", s:1},
+    {l:"C", t:"Good. Effort is exactly how you get better. Keep going.", s:0}
+  ]},
+  { type:"benchwarmer", text:"You watch someone your age transform their body in 90 days through consistent training.", context:"What do you think?", options:[
+    {l:"A", t:"They must have better genetics, more time, or a different metabolism than me.", s:2},
+    {l:"B", t:"Good for them, though I'm not sure I'd get the same results.", s:1},
+    {l:"C", t:"That proves it's possible. What's their method?", s:0}
+  ]},
+  { type:"deflector", text:"Your coach reviews your nutrition log and points out a pattern that's holding you back.", context:"Your first instinct:", options:[
+    {l:"A", t:"I get defensive. They don't fully understand my situation.", s:2},
+    {l:"B", t:"I hear it, but it's hard not to take it personally.", s:1},
+    {l:"C", t:"Exactly what I needed. Data I can actually use.", s:0}
+  ]},
+  { type:"deflector", text:"A training partner says your form on a key lift could be improved.", context:"You:", options:[
+    {l:"A", t:"Brush it off. You've been doing this long enough to know what works.", s:2},
+    {l:"B", t:"Nod along but don't really change anything.", s:1},
+    {l:"C", t:"Thank them and make the adjustment immediately.", s:0}
+  ]},
+  { type:"threatened", text:"Someone in your community posts incredible 90-day results. Dramatic transformation.", context:"How do you actually feel?", options:[
+    {l:"A", t:"A bit deflated. Makes my own progress feel insignificant.", s:2},
+    {l:"B", t:"Happy for them, but quietly compare it to where I am.", s:1},
+    {l:"C", t:"Fired up. That's proof of what's possible. What did they do?", s:0}
+  ]},
+  { type:"threatened", text:"A friend your age, same starting point, is further ahead in their fitness journey than you.", context:"Your honest reaction:", options:[
+    {l:"A", t:"It stings. Makes me question whether I'm cut out for this.", s:2},
+    {l:"B", t:"I'm happy for them but find it hard not to compare.", s:1},
+    {l:"C", t:"It motivates me. Their win shows it's possible. My turn.", s:0}
+  ]}
+];
+
+const RESULTS = {
+  avoider: {
+    pill:      "Your Fixed Mindset Type",
+    name:      ["THE", "AVOIDER"],
+    nameEm:    1,
+    diagnosis: "You're not lazy. You're protecting yourself. Avoiding challenges feels safe because if you never start, you can never fail. But that protection is costing you everything you actually want.",
+    reframe:   "I embrace challenges. They make me stronger.",
+    prompt:    "My result: I'm The Avoider. My reframe this week: \"I embrace challenges. They make me stronger.\" What did you get? Post yours below."
+  },
+  quitter: {
+    pill:      "Your Fixed Mindset Type",
+    name:      ["THE", "QUITTER"],
+    nameEm:    1,
+    diagnosis: "Life hits back and you fold. Not because you're weak. Because setbacks feel like proof it wasn't meant to be. It's not. Setbacks are the training. The ones who win are the ones who get back up.",
+    reframe:   "I persist despite setbacks. This is where I grow.",
+    prompt:    "My result: I'm The Quitter. My reframe this week: \"I persist despite setbacks. This is where I grow.\" What did you get? Post yours below."
+  },
+  benchwarmer: {
+    pill:      "Your Fixed Mindset Type",
+    name:      ["THE", "BENCHWARMER"],
+    nameEm:    1,
+    diagnosis: "You're watching from the sidelines of your own life. Effort feels pointless because somewhere you decided the deck is stacked against you. Genetics, age, circumstance. It's not. Effort is exactly how you get better.",
+    reframe:   "Effort is how I get better. Every rep, every lesson counts.",
+    prompt:    "My result: I'm The Benchwarmer. My reframe this week: \"Effort is how I get better. Every rep counts.\" What did you get? Post yours below."
+  },
+  deflector: {
+    pill:      "Your Fixed Mindset Type",
+    name:      ["THE", "DEFLECTOR"],
+    nameEm:    1,
+    diagnosis: "Feedback lands like an attack. So you deflect it. Dismiss it, ignore it, argue with it. But every piece of feedback you reject is a rep you're leaving on the table. The people improving fastest are the ones who collect it.",
+    reframe:   "Feedback helps me improve. I use it to level up.",
+    prompt:    "My result: I'm The Deflector. My reframe this week: \"Feedback helps me improve. I use it to level up.\" What did you get? Post yours below."
+  },
+  threatened: {
+    pill:      "Your Fixed Mindset Type",
+    name:      ["THE", "THREATENED"],
+    nameEm:    1,
+    diagnosis: "Someone else's win makes you feel behind. Like there's a limited supply of success and they just took yours. There isn't. Their results are proof that yours are possible.",
+    reframe:   "I get inspired by others and learn from their wins.",
+    prompt:    "My result: I'm The Threatened. My reframe this week: \"I get inspired by others and learn from their wins.\" What did you get? Post yours below."
+  }
+};
+
+/* ══════════════════════════════════════
+   QUIZ ENGINE
+══════════════════════════════════════ */
+let currentQ = 0, answers = [], currentType = null;
+
+function startQuiz() {
+  show('screen-quiz');
+  hide('screen-intro');
+  renderQ();
+}
+
+function renderQ() {
+  const q = QUESTIONS[currentQ];
+  const pct = (currentQ / QUESTIONS.length) * 100;
+  document.getElementById('prog-fill').style.width = pct + '%';
+  document.getElementById('prog-count').textContent = `${currentQ + 1} / ${QUESTIONS.length}`;
+
+  const card = document.getElementById('q-card');
+  card.style.animation = 'none'; void card.offsetWidth; card.style.animation = 'fadeUp 0.35s ease both';
+
+  const sel = answers[currentQ] !== undefined ? answers[currentQ] : -1;
+  card.innerHTML = `
+    <div class="q-num">Question ${currentQ + 1} of ${QUESTIONS.length}</div>
+    <div class="q-text">${q.text}</div>
+    ${q.context ? `<div class="q-context">${q.context}</div>` : ''}
+    <div class="options">
+      ${q.options.map((o, i) => `
+        <div class="option${sel===i?' selected':''}" onclick="pick(${i})">
+          <div class="opt-letter" style="${sel===i?'background:var(--neon);border-color:var(--neon);color:#000;':''}">${o.l}</div>
+          <div class="opt-text">${o.t}</div>
+        </div>`).join('')}
+    </div>`;
+
+  document.getElementById('btn-back').style.visibility = currentQ === 0 ? 'hidden' : 'visible';
+  const nxt = document.getElementById('btn-next');
+  nxt.textContent = currentQ === QUESTIONS.length - 1 ? 'See My Result →' : 'Next →';
+  nxt.classList.toggle('on', sel !== -1);
+}
+
+function pick(idx) {
+  answers[currentQ] = idx;
+  document.querySelectorAll('.option').forEach((el, i) => {
+    el.classList.toggle('selected', i === idx);
+    const ltr = el.querySelector('.opt-letter');
+    ltr.style.background    = i === idx ? 'var(--neon)' : '';
+    ltr.style.borderColor   = i === idx ? 'var(--neon)' : '';
+    ltr.style.color         = i === idx ? '#000' : '';
+    el.querySelector('.opt-text').style.color = i === idx ? 'var(--white)' : '';
+  });
+  document.getElementById('btn-next').classList.add('on');
+}
+
+function nextQ() {
+  if (answers[currentQ] === undefined) return;
+  if (currentQ < QUESTIONS.length - 1) { currentQ++; renderQ(); }
+  else calcResult();
+}
+function prevQ() { if (currentQ > 0) { currentQ--; renderQ(); } }
+
+function calcResult() {
+  const sc = {avoider:0, quitter:0, benchwarmer:0, deflector:0, threatened:0};
+  QUESTIONS.forEach((q,i) => { if (answers[i] !== undefined) sc[q.type] += q.options[answers[i]].s; });
+  const winner = Object.entries(sc).sort((a,b)=>b[1]-a[1])[0][0];
+  currentType = winner;
+  showResult(winner);
+}
+
+/* ══════════════════════════════════════
+   RESULT
+══════════════════════════════════════ */
+function showResult(type) {
+  hide('screen-quiz');
+  show('screen-result');
+  window.scrollTo({top:0,behavior:'smooth'});
+
+  const r = RESULTS[type];
+  document.getElementById('r-pill').textContent = r.pill;
+  document.getElementById('r-name').innerHTML = r.name.map((w,i) =>
+    i === r.nameEm ? `<em>${w}</em>` : w
+  ).join(' ');
+  document.getElementById('r-diag').textContent = r.diagnosis;
+  document.getElementById('r-rf').textContent   = r.reframe;
+  document.getElementById('r-prompt').textContent = r.prompt;
+
+  renderBadge();
+}
+
+/* ══════════════════════════════════════
+   BADGE CANVAS — redesigned
+══════════════════════════════════════ */
+function renderBadge() {
+  if (!currentType) return;
+  const r      = RESULTS[currentType];
+  const canvas = document.getElementById('badge-canvas');
+  const ctx    = canvas.getContext('2d');
+  const W = 600, H = 700;
+  canvas.width = W; canvas.height = H;
+
+  const userName = document.getElementById('name-input').value.trim() || 'YOUR NAME';
+  const ac  = r.accent;
+  const today = new Date().toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});
+
+  // ── LIGHT CARD BACKGROUND ──
+  // Warm off-white with subtle texture gradient
+  const bgGrad = ctx.createLinearGradient(0,0,0,H);
+  bgGrad.addColorStop(0, '#F5F0E8');
+  bgGrad.addColorStop(1, '#EDE8DC');
+  ctx.fillStyle = bgGrad;
+  ctx.fillRect(0,0,W,H);
+
+  // Subtle dot texture
+  ctx.fillStyle = 'rgba(0,0,0,0.03)';
+  for(let x=0;x<W;x+=18) for(let y=0;y<H;y+=18) {
+    ctx.beginPath(); ctx.arc(x,y,1,0,Math.PI*2); ctx.fill();
+  }
+
+  // Card border — accent color
+  ctx.strokeStyle = ac;
+  ctx.lineWidth = 5;
+  roundRect(ctx, 12, 12, W-24, H-24, 10);
+  ctx.stroke();
+
+  // Inner hairline border
+  ctx.strokeStyle = 'rgba(0,0,0,0.1)';
+  ctx.lineWidth = 1;
+  roundRect(ctx, 20, 20, W-40, H-40, 8);
+  ctx.stroke();
+
+  // ── ACHIEVEMENT UNLOCKED ──
+  ctx.textAlign = 'center';
+  ctx.fillStyle = 'rgba(0,0,0,0.4)';
+  ctx.font = '600 11px Sora,sans-serif';
+  ctx.fillText('ACHIEVEMENT UNLOCKED', W/2, 58);
+
+  // ── USER NAME ──
+  const nameFontSize = userName.length > 16 ? 28 : userName.length > 12 ? 34 : 40;
+  ctx.fillStyle = '#111111';
+  ctx.font = `700 ${nameFontSize}px Oswald,sans-serif`;
+  ctx.fillText(userName.toUpperCase(), W/2, 100);
+
+  // ── BADGE MEDALLION ──
+  const bx = W/2, by = 320, R = 160;
+
+  // Outer shadow / glow halo
+  const halo = ctx.createRadialGradient(bx,by,R+5,bx,by,R+40);
+  halo.addColorStop(0, ac+'55'); halo.addColorStop(1,'transparent');
+  ctx.fillStyle = halo;
+  ctx.beginPath(); ctx.arc(bx,by,R+40,0,Math.PI*2); ctx.fill();
+
+  // Dark outer ring (like Evelyn's dark scalloped ring)
+  ctx.fillStyle = '#1a1a1a';
+  ctx.beginPath(); ctx.arc(bx,by,R+18,0,Math.PI*2); ctx.fill();
+
+  // Scalloped / gear edge on dark ring
+  const teeth = 32;
+  for(let i=0;i<teeth;i++) {
+    const a = (i/teeth)*Math.PI*2 - Math.PI/2;
+    const tx = bx + Math.cos(a)*(R+18);
+    const ty = by + Math.sin(a)*(R+18);
+    ctx.fillStyle = '#1a1a1a';
+    ctx.beginPath(); ctx.arc(tx,ty,11,0,Math.PI*2); ctx.fill();
+    ctx.strokeStyle = ac;
+    ctx.lineWidth = 1.5;
+    ctx.beginPath(); ctx.arc(tx,ty,11,0,Math.PI*2); ctx.stroke();
+  }
+
+  // Accent ring
+  ctx.strokeStyle = ac;
+  ctx.lineWidth = 3;
+  ctx.beginPath(); ctx.arc(bx,by,R+3,0,Math.PI*2); ctx.stroke();
+
+  // Main medallion fill — dark charcoal
+  const medGrad = ctx.createRadialGradient(bx,by-40,0,bx,by,R);
+  medGrad.addColorStop(0,'#2a2a2a'); medGrad.addColorStop(1,'#111');
+  ctx.fillStyle = medGrad;
+  ctx.beginPath(); ctx.arc(bx,by,R,0,Math.PI*2); ctx.fill();
+
+  // Inner decorative ring
+  ctx.strokeStyle = 'rgba(255,255,255,0.08)';
+  ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.arc(bx,by,R-14,0,Math.PI*2); ctx.stroke();
+  ctx.strokeStyle = ac+'33';
+  ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.arc(bx,by,R-22,0,Math.PI*2); ctx.stroke();
+
+  // ── EARNED TAG at top of badge ──
+  const tagW=90, tagH=26, tagX=bx-tagW/2, tagY=by-R-2;
+  ctx.fillStyle = ac;
+  ctx.beginPath();
+  ctx.moveTo(tagX,tagY); ctx.lineTo(tagX+tagW,tagY);
+  ctx.lineTo(tagX+tagW,tagY+tagH);
+  ctx.lineTo(bx+8,tagY+tagH+10); ctx.lineTo(bx-8,tagY+tagH+10);
+  ctx.lineTo(tagX,tagY+tagH);
+  ctx.closePath(); ctx.fill();
+  ctx.fillStyle = '#000';
+  ctx.font = '700 11px Oswald,sans-serif';
+  ctx.fillText('EARNED', bx, tagY+17);
+
+  // ── STARS flanking ──
+  drawStar(ctx, bx-R-8, by-R+20, 14, ac);
+  drawStar(ctx, bx+R+8, by-R+20, 14, ac);
+
+  // ── ILLUSTRATION (custom per type) ──
+  ctx.save();
+  ctx.beginPath(); ctx.arc(bx,by,R-2,0,Math.PI*2); ctx.clip();
+  drawIllustration(ctx, currentType, bx, by-10, ac);
+  ctx.restore();
+
+  // ── TYPE label inside badge (above ribbon) ──
+  ctx.fillStyle = 'rgba(255,255,255,0.4)';
+  ctx.font = '600 11px Sora,sans-serif';
+  ctx.fillText('YOUR MINDSET TYPE', bx, by+80);
+
+  // ── CURVED RIBBON across bottom of badge ──
+  drawCurvedRibbon(ctx, bx, by, R, ac, r.name[1].toUpperCase());
+
+  // ── DECORATIVE DOTS each side of badge ──
+  [-1,1].forEach(side => {
+    for(let i=0;i<3;i++){
+      ctx.fillStyle = i===0 ? ac : 'rgba(0,0,0,0.15)';
+      ctx.beginPath();
+      ctx.arc(bx + side*(R+38+i*14), by+20, i===0?5:3, 0, Math.PI*2);
+      ctx.fill();
+    }
+  });
+
+  // ── BOTTOM SECTION ──
+  // Thin separator
+  ctx.strokeStyle = 'rgba(0,0,0,0.12)';
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.moveTo(48, by+R+52); ctx.lineTo(W-48, by+R+52); ctx.stroke();
+
+  // Type full name
+  ctx.fillStyle = '#111';
+  ctx.font = `700 ${r.name[1].length>10?26:32}px Oswald,sans-serif`;
+  ctx.fillText(`THE ${r.name[1].toUpperCase()}`, bx, by+R+88);
+
+  // Reframe label
+  ctx.fillStyle = 'rgba(0,0,0,0.4)';
+  ctx.font = '600 10px Sora,sans-serif';
+  ctx.fillText('GROWTH REFRAME', bx, by+R+112);
+
+  // Reframe text
+  ctx.fillStyle = '#222';
+  ctx.font = '500 14px Sora,sans-serif';
+  wrapText(ctx, `"${r.reframe}"`, bx, by+R+134, 490, 20);
+
+  // ── FOOTER ──
+  ctx.fillStyle = 'rgba(0,0,0,0.3)';
+  ctx.font = '500 10px Sora,sans-serif';
+  ctx.fillText(`Earned ${today}`, bx, H-48);
+
+  ctx.fillStyle = '#111';
+  ctx.font = '700 12px Oswald,sans-serif';
+  ctx.fillText('FIT 40 INNER CIRCLE · COACH TONY O', bx, H-30);
+
+  ctx.fillStyle = ac;
+  ctx.font = '600 10px Sora,sans-serif';
+  ctx.fillText('ctofit.com/tools/mindset-detector', bx, H-14);
+}
+
+/* ── Draw curved ribbon along bottom arc ── */
+function drawCurvedRibbon(ctx, cx, cy, R, ac, label) {
+  const ribR = R - 8;
+  const startA = Math.PI * 0.62, endA = Math.PI * 1.38; // lower arc
+  const ribH = 36;
+
+  // Outer ribbon arc (lighter)
+  ctx.fillStyle = ac;
+  ctx.beginPath();
+  ctx.arc(cx, cy, ribR+ribH/2, startA, endA);
+  ctx.arc(cx, cy, ribR-ribH/2, endA, startA, true);
+  ctx.closePath(); ctx.fill();
+
+  // Darker inner shadow
+  ctx.fillStyle = 'rgba(0,0,0,0.18)';
+  ctx.beginPath();
+  ctx.arc(cx, cy, ribR+ribH/2, startA, endA);
+  ctx.arc(cx, cy, ribR+ribH/2-6, endA, startA, true);
+  ctx.closePath(); ctx.fill();
+
+  // Ribbon tails (flag ends)
+  [startA, endA].forEach((a, idx) => {
+    const tailLen = 22, flip = idx===0 ? -1 : 1;
+    const ex = cx + Math.cos(a)*ribR;
+    const ey = cy + Math.sin(a)*ribR;
+    const tx = ex + Math.cos(a+flip*0.4)*tailLen;
+    const ty = ey + Math.sin(a+flip*0.4)*tailLen;
+    const n1x = cx+Math.cos(a-0.18)*(ribR+ribH/2), n1y = cy+Math.sin(a-0.18)*(ribR+ribH/2);
+    const n2x = cx+Math.cos(a-0.18)*(ribR-ribH/2), n2y = cy+Math.sin(a-0.18)*(ribR-ribH/2);
+    ctx.fillStyle = ac+'cc';
+    ctx.beginPath();
+    ctx.moveTo(n1x,n1y); ctx.lineTo(tx,ty); ctx.lineTo(n2x,n2y);
+    ctx.closePath(); ctx.fill();
+  });
+
+  // Text on arc path
+  ctx.save();
+  ctx.font = `700 15px Oswald,sans-serif`;
+  ctx.fillStyle = '#000';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  const textR = ribR;
+  const textAngle = (startA + endA) / 2; // center of arc = bottom
+  const chars = label.split('');
+  const totalAngle = endA - startA;
+  const charAngle = Math.min(totalAngle / (chars.length + 1), 0.14);
+  chars.forEach((ch, i) => {
+    const a = textAngle + (i - (chars.length-1)/2) * charAngle;
+    ctx.save();
+    ctx.translate(cx + Math.cos(a)*textR, cy + Math.sin(a)*textR);
+    ctx.rotate(a + Math.PI/2);
+    ctx.fillText(ch, 0, 0);
+    ctx.restore();
+  });
+  ctx.restore();
+}
+
+/* ── Star shape ── */
+function drawStar(ctx, x, y, size, color) {
+  ctx.fillStyle = color;
+  ctx.beginPath();
+  for(let i=0;i<5;i++){
+    const a1 = (i*4*Math.PI/5) - Math.PI/2;
+    const a2 = ((i*4+2)*Math.PI/5) - Math.PI/2;
+    const ox = x+Math.cos(a1)*size, oy = y+Math.sin(a1)*size;
+    const ix = x+Math.cos(a2)*(size*0.4), iy = y+Math.sin(a2)*(size*0.4);
+    i===0 ? ctx.moveTo(ox,oy) : ctx.lineTo(ox,oy);
+    ctx.lineTo(ix,iy);
+  }
+  ctx.closePath(); ctx.fill();
+}
+
+/* ── Custom SVG-style illustrations per type ── */
+function drawIllustration(ctx, type, cx, cy, ac) {
+  ctx.save();
+  switch(type) {
+
+    case 'avoider': {
+      // Shield with crack — protection that costs you
+      const sh = 72;
+      // Shield body
+      const sg = ctx.createLinearGradient(cx-sh,cy-sh,cx+sh,cy+sh);
+      sg.addColorStop(0,'#2a2a2a'); sg.addColorStop(1,'#111');
+      ctx.fillStyle = sg;
+      ctx.beginPath();
+      ctx.moveTo(cx,cy-sh); ctx.lineTo(cx+sh,cy-sh+20);
+      ctx.lineTo(cx+sh,cy+10); ctx.quadraticCurveTo(cx+sh,cy+sh,cx,cy+sh+16);
+      ctx.quadraticCurveTo(cx-sh,cy+sh,cx-sh,cy+10);
+      ctx.lineTo(cx-sh,cy-sh+20); ctx.closePath(); ctx.fill();
+      // Shield border
+      ctx.strokeStyle = ac; ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.moveTo(cx,cy-sh); ctx.lineTo(cx+sh,cy-sh+20);
+      ctx.lineTo(cx+sh,cy+10); ctx.quadraticCurveTo(cx+sh,cy+sh,cx,cy+sh+16);
+      ctx.quadraticCurveTo(cx-sh,cy+sh,cx-sh,cy+10);
+      ctx.lineTo(cx-sh,cy-sh+20); ctx.closePath(); ctx.stroke();
+      // Crack line
+      ctx.strokeStyle = ac; ctx.lineWidth = 2.5;
+      ctx.beginPath();
+      ctx.moveTo(cx-8,cy-sh+10); ctx.lineTo(cx+4,cy-10);
+      ctx.lineTo(cx-6,cy+20); ctx.lineTo(cx+10,cy+sh);
+      ctx.stroke();
+      // Inner emblem
+      ctx.strokeStyle = 'rgba(255,255,255,0.15)'; ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.moveTo(cx,cy-sh+16); ctx.lineTo(cx+sh-16,cy-sh+32);
+      ctx.lineTo(cx+sh-16,cy+8); ctx.quadraticCurveTo(cx+sh-16,cy+sh-16,cx,cy+sh);
+      ctx.quadraticCurveTo(cx-sh+16,cy+sh-16,cx-sh+16,cy+8);
+      ctx.lineTo(cx-sh+16,cy-sh+32); ctx.closePath(); ctx.stroke();
+      break;
+    }
+
+    case 'quitter': {
+      // Person getting back up — rising figure
+      const pc = ac;
+      // Ground line
+      ctx.strokeStyle = 'rgba(255,255,255,0.15)'; ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.moveTo(cx-80,cy+55); ctx.lineTo(cx+80,cy+55); ctx.stroke();
+
+      // Rising figure (stylised)
+      ctx.strokeStyle = pc; ctx.lineWidth = 4; ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+      // Body rising at angle
+      ctx.beginPath();
+      ctx.moveTo(cx-20,cy+50); // feet
+      ctx.lineTo(cx-10,cy+10); // torso
+      ctx.stroke();
+      // Head
+      ctx.fillStyle = pc;
+      ctx.beginPath(); ctx.arc(cx-5,cy-10,16,0,Math.PI*2); ctx.fill();
+      // Arms raised (victory)
+      ctx.strokeStyle = pc; ctx.lineWidth = 4;
+      ctx.beginPath(); ctx.moveTo(cx-10,cy+10); ctx.lineTo(cx-40,cy-20); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(cx-10,cy+10); ctx.lineTo(cx+22,cy-28); ctx.stroke();
+      // Upward arrows around figure
+      ctx.strokeStyle = 'rgba(255,255,255,0.2)'; ctx.lineWidth = 1.5;
+      [[-55,20],[-45,-5],[30,-10],[42,15]].forEach(([ox,oy])=>{
+        ctx.beginPath();
+        ctx.moveTo(cx+ox,cy+oy+12); ctx.lineTo(cx+ox,cy+oy-12);
+        ctx.moveTo(cx+ox-5,cy+oy-6); ctx.lineTo(cx+ox,cy+oy-12); ctx.lineTo(cx+ox+5,cy+oy-6);
+        ctx.stroke();
+      });
+      break;
+    }
+
+    case 'benchwarmer': {
+      // Bench with person sitting, arrows passing by
+      ctx.strokeStyle = ac; ctx.lineWidth = 4; ctx.lineCap='round';
+      // Bench slats
+      ctx.fillStyle = '#2a2020';
+      ctx.fillRect(cx-70,cy+30,140,12);
+      ctx.fillRect(cx-70,cy+48,140,8);
+      // Bench legs
+      ctx.strokeStyle = 'rgba(255,255,255,0.3)'; ctx.lineWidth = 3;
+      [[-55,10],[55,10]].forEach(([ox])=>{
+        ctx.beginPath(); ctx.moveTo(cx+ox,cy+42); ctx.lineTo(cx+ox,cy+68); ctx.stroke();
+      });
+      // Sitting figure
+      ctx.strokeStyle = ac; ctx.lineWidth = 4; ctx.lineCap='round'; ctx.lineJoin='round';
+      ctx.fillStyle = ac;
+      ctx.beginPath(); ctx.arc(cx,cy-30,18,0,Math.PI*2); ctx.fill(); // head
+      ctx.beginPath();
+      ctx.moveTo(cx,cy-12); ctx.lineTo(cx,cy+28); // torso
+      ctx.moveTo(cx,cy+28); ctx.lineTo(cx-22,cy+46); // left leg bent
+      ctx.moveTo(cx,cy+28); ctx.lineTo(cx+22,cy+46); // right leg bent
+      ctx.moveTo(cx,cy+6); ctx.lineTo(cx-28,cy+18); // arms resting
+      ctx.moveTo(cx,cy+6); ctx.lineTo(cx+28,cy+18);
+      ctx.stroke();
+      // Speed lines passing by (others in motion)
+      ctx.strokeStyle = 'rgba(255,255,255,0.2)'; ctx.lineWidth = 2;
+      [[-20],[-8],[4],[16]].forEach(([oy])=>{
+        ctx.beginPath(); ctx.moveTo(cx-90,cy+oy); ctx.lineTo(cx-38,cy+oy); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(cx+38,cy+oy); ctx.lineTo(cx+90,cy+oy); ctx.stroke();
+      });
+      break;
+    }
+
+    case 'deflector': {
+      // Arrows bouncing off a barrier — deflection
+      ctx.save();
+      // Central barrier / wall
+      const wg = ctx.createLinearGradient(cx-12,cy-60,cx+12,cy+60);
+      wg.addColorStop(0,'#333'); wg.addColorStop(1,'#1a1a1a');
+      ctx.fillStyle = wg;
+      ctx.fillRect(cx-10,cy-60,20,120);
+      ctx.strokeStyle='rgba(255,255,255,0.2)'; ctx.lineWidth=1;
+      ctx.strokeRect(cx-10,cy-60,20,120);
+      // Incoming arrows (left side)
+      ctx.strokeStyle=ac; ctx.lineWidth=3; ctx.lineCap='round';
+      [[-30],[-10],[10],[30]].forEach(([oy])=>{
+        ctx.beginPath(); ctx.moveTo(cx-80,cy+oy); ctx.lineTo(cx-12,cy+oy); ctx.stroke();
+        // arrowhead
+        ctx.beginPath();
+        ctx.moveTo(cx-20,cy+oy-6); ctx.lineTo(cx-12,cy+oy); ctx.lineTo(cx-20,cy+oy+6);
+        ctx.stroke();
+      });
+      // Deflected arrows (bouncing off at angles)
+      ctx.strokeStyle='rgba(255,255,255,0.35)'; ctx.lineWidth=2;
+      [[-30,-1],[-10,-0.6],[10,0.6],[30,1]].forEach(([oy,ang])=>{
+        ctx.save();
+        ctx.translate(cx+12, cy+oy);
+        ctx.rotate(ang*0.4);
+        ctx.beginPath(); ctx.moveTo(0,0); ctx.lineTo(60,0); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(52,-6); ctx.lineTo(60,0); ctx.lineTo(52,6); ctx.stroke();
+        ctx.restore();
+      });
+      ctx.restore();
+      break;
+    }
+
+    case 'threatened': {
+      // Two figures — one elevated, one looking up (comparison)
+      ctx.save();
+      // Figure 1 — elevated (others' success)
+      const f1x = cx+30, f1y = cy-10;
+      // Podium
+      const podGrad = ctx.createLinearGradient(f1x-22,f1y+50,f1x+22,f1y+70);
+      podGrad.addColorStop(0,ac+'88'); podGrad.addColorStop(1,ac+'44');
+      ctx.fillStyle=podGrad;
+      ctx.fillRect(f1x-22,f1y+48,44,30);
+      ctx.fillStyle=ac; ctx.font='700 14px Oswald,sans-serif';
+      ctx.textAlign='center'; ctx.fillText('1', f1x, f1y+68);
+      // Elevated figure
+      ctx.fillStyle=ac;
+      ctx.beginPath(); ctx.arc(f1x,f1y-18,15,0,Math.PI*2); ctx.fill();
+      ctx.strokeStyle=ac; ctx.lineWidth=4; ctx.lineCap='round';
+      ctx.beginPath();
+      ctx.moveTo(f1x,f1y-3); ctx.lineTo(f1x,f1y+36);
+      ctx.moveTo(f1x,f1y+10); ctx.lineTo(f1x-20,f1y+22);
+      ctx.moveTo(f1x,f1y+10); ctx.lineTo(f1x+20,f1y+22);
+      ctx.moveTo(f1x,f1y+36); ctx.lineTo(f1x-14,f1y+56);
+      ctx.moveTo(f1x,f1y+36); ctx.lineTo(f1x+14,f1y+56);
+      ctx.stroke();
+      // Arms raised (winning)
+      ctx.strokeStyle=ac; ctx.lineWidth=3;
+      ctx.beginPath(); ctx.moveTo(f1x-20,f1y+22); ctx.lineTo(f1x-32,f1y+4); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(f1x+20,f1y+22); ctx.lineTo(f1x+32,f1y+4); ctx.stroke();
+
+      // Figure 2 — looking up (the threatened)
+      const f2x = cx-32, f2y = cy+20;
+      ctx.fillStyle='rgba(255,255,255,0.45)';
+      ctx.beginPath(); ctx.arc(f2x,f2y-15,13,0,Math.PI*2); ctx.fill();
+      ctx.strokeStyle='rgba(255,255,255,0.45)'; ctx.lineWidth=3.5;
+      ctx.beginPath();
+      ctx.moveTo(f2x,f2y-2); ctx.lineTo(f2x,f2y+30);
+      ctx.moveTo(f2x,f2y+12); ctx.lineTo(f2x-16,f2y+22);
+      ctx.moveTo(f2x,f2y+12); ctx.lineTo(f2x+16,f2y+22);
+      ctx.moveTo(f2x,f2y+30); ctx.lineTo(f2x-12,f2y+48);
+      ctx.moveTo(f2x,f2y+30); ctx.lineTo(f2x+12,f2y+48);
+      ctx.stroke();
+      // Gaze line from f2 toward f1 (looking up)
+      ctx.strokeStyle='rgba(255,255,255,0.15)'; ctx.lineWidth=1; ctx.setLineDash([4,4]);
+      ctx.beginPath(); ctx.moveTo(f2x+14,f2y-10); ctx.lineTo(f1x-14,f1y-14); ctx.stroke();
+      ctx.setLineDash([]);
+      ctx.restore();
+      break;
+    }
+  }
+  ctx.restore();
+}
+
+/* ── Canvas helpers ── */
+function roundRect(ctx, x, y, w, h, r) {
+  ctx.beginPath();
+  ctx.moveTo(x+r, y); ctx.lineTo(x+w-r, y);
+  ctx.quadraticCurveTo(x+w, y, x+w, y+r);
+  ctx.lineTo(x+w, y+h-r);
+  ctx.quadraticCurveTo(x+w, y+h, x+w-r, y+h);
+  ctx.lineTo(x+r, y+h);
+  ctx.quadraticCurveTo(x, y+h, x, y+h-r);
+  ctx.lineTo(x, y+r);
+  ctx.quadraticCurveTo(x, y, x+r, y);
+  ctx.closePath();
+}
+
+function wrapText(ctx, text, x, y, maxWidth, lineH) {
+  const words = text.split(' ');
+  let line = '';
+  for (let i=0; i<words.length; i++) {
+    const test = line + words[i] + ' ';
+    if (ctx.measureText(test).width > maxWidth && i > 0) {
+      ctx.fillText(line.trim(), x, y); line = words[i] + ' '; y += lineH;
+    } else { line = test; }
+  }
+  ctx.fillText(line.trim(), x, y);
+}
+
+/* ══════════════════════════════════════
+   ACTIONS
+══════════════════════════════════════ */
+function downloadBadge() {
+  const canvas = document.getElementById('badge-canvas');
+  const name   = document.getElementById('name-input').value.trim() || 'badge';
+  const link   = document.createElement('a');
+  link.download = `fitfit40-mindset-${name.toLowerCase().replace(/\s+/g,'-')}.png`;
+  link.href = canvas.toDataURL('image/png');
+  link.click();
+}
+
+function copyCaption() {
+  if (!currentType) return;
+  const r    = RESULTS[currentType];
+  const name = document.getElementById('name-input').value.trim() || 'I';
+  const text = r.caption(name, r.reframe);
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.getElementById('copy-btn');
+    btn.classList.add('copied');
+    btn.innerHTML = '<span class="btn-icon">✓</span>Copied!';
+    setTimeout(() => {
+      btn.classList.remove('copied');
+      btn.innerHTML = '<span class="btn-icon">📋</span>Copy Caption';
+    }, 2500);
+  });
+}
+
+function copyPrompt() {
+  const text = document.getElementById('r-prompt').textContent;
+  if (!text) return;
+  navigator.clipboard.writeText(text).then(() => {
+    const btn  = document.getElementById('copy-prompt-btn');
+    const icon = document.getElementById('copy-prompt-icon');
+    const lbl  = document.getElementById('copy-prompt-text');
+    // Success state
+    btn.style.background   = 'var(--neon)';
+    btn.style.borderColor  = 'var(--neon)';
+    btn.style.color        = '#000';
+    icon.textContent = '✓';
+    lbl.textContent  = 'Copied to clipboard!';
+    setTimeout(() => {
+      btn.style.background  = 'rgba(0,242,97,0.1)';
+      btn.style.borderColor = 'rgba(0,242,97,0.3)';
+      btn.style.color       = 'var(--neon)';
+      icon.textContent = '📋';
+      lbl.textContent  = 'Copy';
+    }, 2500);
+  });
+}
+
+function retake() {
+  currentQ = 0; answers = []; currentType = null;
+  hide('screen-result'); show('screen-intro');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function show(id) { const el=document.getElementById(id); el.style.display='flex'; el.style.flexDirection='column'; }
+function hide(id) { document.getElementById(id).style.display='none'; }
+
+/* Keyboard */
+document.addEventListener('keydown', e => {
+  if (document.getElementById('screen-quiz').style.display==='none') return;
+  if (['1','2','3'].includes(e.key)) pick(parseInt(e.key)-1);
+  if (e.key==='ArrowRight'||e.key==='Enter') {
+    if (document.getElementById('btn-next').classList.contains('on')) nextQ();
+  }
+  if (e.key==='ArrowLeft') prevQ();
+});
+
+/* Re-render badge when fonts load */
+document.fonts.ready.then(() => { if (currentType) renderBadge(); });
+</script>
+</body>
+</html>
