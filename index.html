@@ -254,7 +254,7 @@
 
     /* CAROUSEL */
     .carousel-wrap{position:relative;padding-bottom:40px;margin-top:48px;max-width:1200px;margin-left:auto;margin-right:auto;}
-    .carousel-window{width:100%;padding:16px 15%;box-sizing:border-box;overflow:hidden;}
+    .carousel-window{width:100%;box-sizing:border-box;overflow:hidden;}
     .carousel-track{display:flex;gap:12px;transition:transform 0.4s cubic-bezier(.25,.46,.45,.94);}
     .carousel-slide{flex:0 0 55%;max-width:580px;border-radius:12px;transition:opacity 0.4s,transform 0.4s;opacity:0.3;transform:scale(0.92);cursor:pointer;}
     .carousel-slide.active{opacity:1;transform:scale(1);cursor:default;outline:2px solid rgba(0,242,97,0.4);}
@@ -655,8 +655,13 @@
     });
     function go(n){
       cur=(n+N)%N;
+      var win=document.querySelector('.carousel-window');
+      var winW=win.offsetWidth;
       var slideW=slides[0].offsetWidth;
-      trk.style.transform='translateX('+(-cur*(slideW+gap))+'px)';
+      // Center the active slide: offset = center of window - center of active slide
+      var centerOffset=(winW/2)-(slideW/2);
+      var offset=centerOffset - cur*(slideW+gap);
+      trk.style.transform='translateX('+offset+'px)';
       slides.forEach(function(s,i){s.classList.toggle('active',i===cur);});
       dts.querySelectorAll('.carousel-dot').forEach(function(d,i){d.classList.toggle('active',i===cur);});
     }
